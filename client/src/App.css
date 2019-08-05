@@ -23,10 +23,10 @@
   color: #61dafb;
 }
 
-.HeaderButton{
+.HeaderButton {
   margin-top: 20px;
   margin-left: 20px;
-  margin-bottom: 20px
+  margin-bottom: 20px;
 }
 
 @keyframes App-logo-spin {
@@ -36,4 +36,25 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.tb-btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: #f8f8f8;
+  margin: 10px 3px;
+  text-align: center;
+}
+
+.tb-btn:hover {
+  background-color: #dee2e9;
+}
+
+.icon {
+  margin: 5px 0px;
+}
+
+.doc {
+  text-align: center;
 }
