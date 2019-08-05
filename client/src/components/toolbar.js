@@ -17,12 +17,15 @@ class Toolbar extends React.Component {
     super(props);
   }
 
+ 
+
   render() {
     return (
-      <div className="doc">
-        <button className="tb-btn">
+      
+      <div className="doc" >
+        <button className="tb-btn" >
           <h2 className="icon">
-            <MdFormatBold />
+            <MdFormatBold  />
           </h2>
         </button>
         <button className="tb-btn">
@@ -71,8 +74,10 @@ class Toolbar extends React.Component {
           </h2>
         </button>
       </div>
+      
     );
   }
 }
+
 
 export default Toolbar;
