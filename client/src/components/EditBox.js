@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Editor, EditorState } from "draft-js";
-// import Toolbar from './Toolbar';
+import Toolbar from "./Toolbar";
 
 function EditBox({ editorState, onChange }) {
   const editBoxStyle = {
@@ -20,7 +20,7 @@ function EditBox({ editorState, onChange }) {
 
   return (
     <div style={editBoxStyle}>
-      {/* <Toolbar /> */}
+      <Toolbar />
       <div style={inputBoxStyle}>
         <Editor
           editorState={editorState}
