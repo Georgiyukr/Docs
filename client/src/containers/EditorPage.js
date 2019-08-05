@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Editor, EditorState } from "draft-js";
 import EditBox from "../components/EditBox";
+import Headers from "../components/headers";
 
 function EditorPage() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   return (
     <div>
-      <h1>Doc editor page</h1>
-      <div className="banner"> Sample Document </div>
+      <Headers />
+
       <EditBox editorState={editorState} onChange={setEditorState} />
     </div>
   );
