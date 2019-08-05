@@ -17,9 +17,8 @@ function EditBox({ editorState, onChange }) {
   //   fontSize: "16px",
   //   marginTop: "10px"
   // };
-  
+
   const editBoxStyle = {
-  
     background: "#fff",
     border: "3px solid #ddd",
     fontFamily: "Georgia",
@@ -27,23 +26,21 @@ function EditBox({ editorState, onChange }) {
     padding: "1 5px",
     width: 550,
     height: 200,
-    
-    padding: 40,
-  
-    
+
+    padding: 40
   };
   const inputBoxStyle = {
     borderTop: "1px solid #ddd",
     cursor: "text",
     fontSize: "20px",
     marginTop: "10px",
-    fontFamily: "Georgia",
+    fontFamily: "Georgia"
   };
-  
-  const whole ={
+
+  const whole = {
     display: "flex",
-    justifyContent:"center"
-  }
+    justifyContent: "center"
+  };
 
   return (
     <div style={editBoxStyle}>
@@ -52,7 +49,7 @@ function EditBox({ editorState, onChange }) {
         <Editor
           editorState={editorState}
           onChange={onChange}
-          placeholder="Tell a story..."
+          placeholder="Type below this line"
         />
       </div>
     </div>
