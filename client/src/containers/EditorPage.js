@@ -10,10 +10,18 @@ function EditorPage() {
 
   return (
     <div>
+      <h1 className="text" style={textstyle}>
+        Doc Page
+      </h1>
       <Headers />
       <EditBox editorState={editorState} onChange={setEditorState} />
     </div>
   );
 }
+
+const textstyle = {
+  display: "flex",
+  justifyContent: "center"
+};
 
 export default EditorPage;
