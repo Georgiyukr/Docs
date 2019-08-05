@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Editor, EditorState} from "draft-js";
-import Editors from './Editors'
 
+import EditBox from "../components/EditBox";
+import Headers from "../components/Headers";
 
 function EditorPage() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -11,9 +12,8 @@ function EditorPage() {
   return (
     <div >
       <h1 className="text" style={textstyle}>Doc Page</h1>
-      <Editors editorState={editorState} onChange={setEditorState} />
-      
-      
+      <Headers />
+      <EditBox editorState={editorState} onChange={setEditorState} />
     </div>
   );
 }

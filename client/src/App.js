@@ -3,7 +3,11 @@ import EditorPage from "./containers/EditorPage";
 
 
 function App() {
-  return <EditorPage />;
+  return (
+    <div>
+      <EditorPage />
+    </div>
+  );
 }
 
 export default App;
