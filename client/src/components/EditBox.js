@@ -11,27 +11,27 @@ function EditBox({ editorState, onChange }) {
     fontSize: "14px",
     padding: "15px"
   };
-  const inputBoxStyle = {
-    borderTop: "1px solid #ddd",
-    cursor: "text",
-    fontSize: "16px",
-    marginTop: "10px"
-  };
+  // const inputBoxStyle = {
+  //   borderTop: "1px solid #ddd",
+  //   cursor: "text",
+  //   fontSize: "16px",
+  //   marginTop: "10px"
+  // };
 
-  const editBoxStyle = {
-    background: "#fff",
-    border: "3px solid #ddd",
-    // fontFamily: "Georgia",
-    // fontSize: "50px",
+  // const editBoxStyle = {
+  //   background: "#fff",
+  //   border: "3px solid #ddd",
+  //   // fontFamily: "Georgia",
+  //   // fontSize: "50px",
     
-    width: 550,
-    height: 200,
-    justifyContent:"center",
-    padding: 40,
-    margin: 10
+  //   width: 550,
+  //   height: 200,
+  //   justifyContent:"center",
+  //   padding: 40,
+  //   margin: 10
   
     
-  };
+  // };
   const inputBoxStyle = {
     borderTop: "1px solid #ddd",
     cursor: "text",
