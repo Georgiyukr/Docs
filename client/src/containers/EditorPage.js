@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Editor, EditorState } from "draft-js";
+
 import EditBox from "../components/EditBox";
 import Headers from "../components/headers";
-import Toolbar from "../components/toolbar";
 
 function EditorPage() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
