@@ -3,10 +3,23 @@ import ReactDOM from "react-dom";
 import { Editor, EditorState,RichUtils } from "draft-js";
 import Toolbar from "./Toolbar";
 
-function EditBox({ editorState, onChange }) { 
+function EditBox({ editorState, onChange }) {
   const editBoxStyle = {
-    display:"flex",
-    // background: "#fff",
+    background: "#fff",
+    border: "3px solid #ddd",
+    fontFamily: "Georgia, serif",
+    fontSize: "14px",
+    padding: "15px"
+  };
+  const inputBoxStyle = {
+    borderTop: "1px solid #ddd",
+    cursor: "text",
+    fontSize: "16px",
+    marginTop: "10px"
+  };
+
+  const editBoxStyle = {
+    background: "#fff",
     border: "3px solid #ddd",
     // fontFamily: "Georgia",
     // fontSize: "50px",
@@ -14,7 +27,7 @@ function EditBox({ editorState, onChange }) {
     width: 550,
     height: 200,
     justifyContent:"center",
-    padding: 90,
+    padding: 40,
     margin: 10
   
     
@@ -28,11 +41,11 @@ function EditBox({ editorState, onChange }) {
     padding: "5px",
     marginTop: "10px"
   };
-  
-  const whole ={
+
+  const whole = {
     display: "flex",
-    justifyContent:"center"
-  }
+    justifyContent: "center"
+  };
 
 
 
@@ -49,7 +62,7 @@ function EditBox({ editorState, onChange }) {
         <Editor
           editorState={editorState}
           onChange={onChange}
-          placeholder="Tell a story..."
+          placeholder="Type below this line"
         />
       </div>
     </div>
