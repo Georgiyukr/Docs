@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { Editor, EditorState } from "draft-js";
+import { Editor, EditorState, RichUtils } from "draft-js";
 // import Toolbar from './Toolbar';
 
 function EditBox({ editorState, onChange }) {
@@ -16,6 +16,19 @@ function EditBox({ editorState, onChange }) {
     cursor: "text",
     fontSize: "16px",
     marginTop: "10px"
+  };
+
+  const _onBoldClick = () => {
+    onChange(RichUtils.toggleInlineStyle(
+      editorState, "BOLD"
+    ));
+  };
+
+  const _onItalicClick = () => {
+    onChange(RichUtils.toggleInlineStyle(
+      editorState, "ITALIC"
+    ));
+
   };
 
   return (
