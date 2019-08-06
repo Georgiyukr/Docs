@@ -8,6 +8,8 @@ import Headers from "../components/Headers";
 function EditorPage() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
+
+
   return (
     <div className="pageContainer">
       <h1 className="text" style={textstyle}>
