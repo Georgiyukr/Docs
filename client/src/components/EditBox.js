@@ -1,42 +1,139 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { Editor, EditorState } from "draft-js";
+import { Editor, EditorState, RichUtils, Modifier } from "draft-js";
 import Toolbar from "./Toolbar";
+import Login from "./Login";
 
 function EditBox({ editorState, onChange }) {
   const editBoxStyle = {
     background: "#fff",
     border: "3px solid #ddd",
-    fontFamily: "Georgia",
-    fontSize: "30px",
-    padding: "1 5px",
-    width: 550,
-    height: 200,
-
-    padding: 40
+    fontFamily: "Georgia, serif",
+    fontSize: "14px",
+    padding: "15px"
   };
+  // const inputBoxStyle = {
+  //   borderTop: "1px solid #ddd",
+  //   cursor: "text",
+  //   fontSize: "16px",
+  //   marginTop: "10px"
+  // };
+
+  // const editBoxStyle = {
+  //   background: "#fff",
+  //   border: "3px solid #ddd",
+  //   // fontFamily: "Georgia",
+  //   // fontSize: "50px",
+
+  //   width: 550,
+  //   height: 200,
+  //   justifyContent:"center",
+  //   padding: 40,
+  //   margin: 10
+
+  // };
   const inputBoxStyle = {
     borderTop: "1px solid #ddd",
     cursor: "text",
     fontSize: "20px",
     marginTop: "10px",
-    fontFamily: "Georgia"
+    fontFamily: "Georgia",
+    padding: "5px",
+    marginTop: "10px"
   };
 
   const whole = {
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop: 50,
+    height: 300
   };
 
+  const alignText = style => {
+    let currentContent = editorState.getCurrentContent();
+    let selection = editorState.getSelection();
+    // let focusBlock = currentContent.getBlockForKey(selection.getFocusKey());
+    // let anchorBlock = currentContent.getBlockForKey(selection.getAnchorKey());
+    // let selectionIsBackward = selection.getIsBackward();
+
+    // let changes = {
+    //   anchorOffset: 0,
+    //   focusOffset: focusBlock.getLength()
+    // };
+
+    // if (selectionIsBackward) {
+    //   changes = {
+    //     focusOffset: 0,
+    //     anchorOffset: anchorBlock.getLength()
+    //   };
+    // }
+    console.log("yeaaa");
+
+    let nextContentState = Modifier.setBlockType(
+      currentContent,
+      selection,
+      style
+    );
+    onChange(
+      EditorState.push(editorState, nextContentState, "change-block-type")
+    );
+  };
+
+  function myBlockStyleFn(contentBlock) {
+    const type = contentBlock.getType();
+    console.log(type);
+    if (type === "LEFT") {
+      return "left";
+    }
+    if (type === "CENTER") {
+      return "center";
+    }
+    if (type === "RIGHT") {
+      return "right";
+    }
+  }
+
+  const _onBoldClick = () => {
+    onChange(RichUtils.toggleInlineStyle(editorState, "BOLD"));
+  };
+
+  const _onItalicClick = () => {
+    onChange(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
+  };
+
+  const _onUnderlineClick = () => {
+    onChange(RichUtils.toggleInlineStyle(editorState, "UNDERLINE"));
+  };
+
+  const _onBlockStyleChange = style => {
+    onChange(RichUtils.toggleBlockType(editorState, style));
+  };
+
+  // const _onFontColorChange = (color) => {
+  //   onChange(RichUtils.toggleBlockType(
+  //     editorState
+  //   ))
+
+  // }
+
   return (
-    <div style={editBoxStyle}>
-      <Toolbar />
-      <div style={inputBoxStyle}>
-        <Editor
-          editorState={editorState}
-          onChange={onChange}
-          placeholder="Type below this line"
+    <div style={whole}>
+      <div style={editBoxStyle}>
+        <Toolbar
+          alignText={alignText}
+          onBoldClick={_onBoldClick}
+          onItalicClick={_onItalicClick}
+          onUnderlineClick={_onUnderlineClick}
+          onBlockStyleChange={_onBlockStyleChange}
         />
+        <div style={inputBoxStyle}>
+          <Editor
+            blockStyleFn={myBlockStyleFn}
+            editorState={editorState}
+            onChange={onChange}
+            placeholder="Type below this line"
+          />
+        </div>
       </div>
     </div>
   );
