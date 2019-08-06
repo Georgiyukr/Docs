@@ -26,7 +26,7 @@ const documentSchema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: false
   },
   author: {
     type: mongoose.Schema.ObjectId,
