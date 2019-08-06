@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Editor, EditorState, RichUtils, Modifier } from "draft-js";
 import Toolbar from "./Toolbar";
-import Login from "./Login";
+
 
 function EditBox({ editorState, onChange }) {
   const editBoxStyle = {
