@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Editor, EditorState, RichUtils, Modifier } from "draft-js";
 import Toolbar from "./Toolbar";
 
+
 function EditBox({ editorState, onChange }) {
   const editBoxStyle = {
     background: "#fff",
@@ -43,7 +44,9 @@ function EditBox({ editorState, onChange }) {
 
   const whole = {
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop: 50,
+    height: 300
   };
 
   const alignText = style => {

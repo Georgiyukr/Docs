@@ -7,6 +7,7 @@ class Headers extends React.Component {
   }
   render() {
     return (
+      <div style={headers}>
       <div>
         <button className="HeaderButton" type="submit">
           Back to Documents Portal
@@ -19,8 +20,13 @@ class Headers extends React.Component {
         </button>
         <div className="banner"> Sample Document </div>
       </div>
+      </div>
     );
   }
+}
+const headers ={
+  display:"flex",
+  justifyContent: "center"
 }
 
 export default Headers;

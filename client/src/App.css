@@ -92,11 +92,8 @@
 .icon {
   margin: 5px 0px;
 }
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.editor {
+  border: 3px;
+  border-color: #000000;
 }

@@ -11,7 +11,7 @@ function EditorPage() {
 
 
   return (
-    <div>
+    <div className="pageContainer">
       <h1 className="text" style={textstyle}>
         Doc Page
       </h1>
