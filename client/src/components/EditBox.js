@@ -46,7 +46,7 @@ function EditBox({ editorState, onChange }) {
     display: "flex",
     justifyContent: "center",
     marginTop: 50,
-    height:300
+    height: 300
   };
 
   const alignText = style => {
