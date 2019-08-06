@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { Editor, EditorState } from "draft-js";
-import Toolbar from "./Toolbar";
+import { Editor, EditorState, Modifier } from "draft-js";
+import Toolbar from "./toolbar";
 
 function EditBox({ editorState, onChange }) {
   // const editBoxStyle = {
@@ -42,11 +42,54 @@ function EditBox({ editorState, onChange }) {
     justifyContent: "center"
   };
 
+  const alignText = style => {
+    let currentContent = editorState.getCurrentContent();
+    let selection = editorState.getSelection();
+    // let focusBlock = currentContent.getBlockForKey(selection.getFocusKey());
+    // let anchorBlock = currentContent.getBlockForKey(selection.getAnchorKey());
+    // let selectionIsBackward = selection.getIsBackward();
+
+    // let changes = {
+    //   anchorOffset: 0,
+    //   focusOffset: focusBlock.getLength()
+    // };
+
+    // if (selectionIsBackward) {
+    //   changes = {
+    //     focusOffset: 0,
+    //     anchorOffset: anchorBlock.getLength()
+    //   };
+    // }
+
+    let nextContentState = Modifier.setBlockType(
+      currentContent,
+      selection,
+      style
+    );
+    onChange(
+      EditorState.push(editorState, nextContentState, "change-block-type")
+    );
+  };
+
+  function myBlockStyleFn(contentBlock) {
+    const type = contentBlock.getType();
+    if (type === "LEFT") {
+      return "left";
+    }
+    if (type === "CENTER") {
+      return "center";
+    }
+    if (type === "RIGHT") {
+      return "right";
+    }
+  }
+
   return (
     <div style={editBoxStyle}>
-      <Toolbar />
+      <Toolbar alignText={alignText} />
       <div style={inputBoxStyle}>
         <Editor
+          blockStyleFn={myBlockStyleFn}
           editorState={editorState}
           onChange={onChange}
           placeholder="Type below this line"

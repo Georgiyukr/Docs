@@ -45,17 +45,32 @@ class Toolbar extends React.Component {
             <MdFormatSize />
           </h2>
         </button>
-        <button className="tb-btn">
+        <button
+          className="tb-btn"
+          onClick={() => {
+            this.props.alignText("LEFT");
+          }}
+        >
           <h2 className="icon">
             <MdFormatAlignLeft />
           </h2>
         </button>
-        <button className="tb-btn">
+        <button
+          className="tb-btn"
+          onClick={() => {
+            this.props.alignText("CENTER");
+          }}
+        >
           <h2 className="icon">
             <MdFormatAlignCenter />
           </h2>
         </button>
-        <button className="tb-btn">
+        <button
+          className="tb-btn"
+          onClick={() => {
+            this.props.alignText("RIGHT");
+          }}
+        >
           <h2 className="icon">
             <MdFormatAlignRight />
           </h2>
