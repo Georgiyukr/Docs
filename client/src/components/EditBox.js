@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Editor, EditorState,RichUtils } from "draft-js";
 import Toolbar from "./Toolbar";
+import Login from "./Login";
 
 function EditBox({ editorState, onChange }) {
   const editBoxStyle = {
@@ -44,7 +45,9 @@ function EditBox({ editorState, onChange }) {
 
   const whole = {
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop: 50,
+    height:300
   };
 
 
@@ -66,6 +69,7 @@ function EditBox({ editorState, onChange }) {
         />
       </div>
     </div>
+    
     </div>
   );
 }
