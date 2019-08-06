@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { Editor, EditorState,RichUtils } from "draft-js";
+import { Editor, EditorState, RichUtils } from "draft-js";
 import Toolbar from "./Toolbar";
 
 function EditBox({ editorState, onChange }) {
@@ -47,16 +47,48 @@ function EditBox({ editorState, onChange }) {
     justifyContent: "center"
   };
 
+  const _onBoldClick = () => {
+    onChange(RichUtils.toggleInlineStyle(
+      editorState, "BOLD"
+    ));
+  };
 
+  const _onItalicClick = () => {
+    onChange(RichUtils.toggleInlineStyle(
+      editorState, "ITALIC"
+    ));
+
+  };
+
+  const _onUnderlineClick = () => {
+    onChange(RichUtils.toggleInlineStyle(
+      editorState, "UNDERLINE"
+    ));
+
+  };
+
+  const _onBlockStyleChange = (style) => {
+    onChange(RichUtils.toggleBlockType(
+      editorState, style
+    ));
+
+  }
+
+
+
+  // const _onFontColorChange = (color) => {
+  //   onChange(RichUtils.toggleBlockType(
+  //     editorState
+  //   ))
+
+  // }
 
   return (
     <div style={whole}>
      
     <div style={editBoxStyle}>
-
-    
-    <Toolbar/>
-  
+      <Toolbar onBoldClick={_onBoldClick} onItalicClick={_onItalicClick}
+        onUnderlineClick={_onUnderlineClick} onBlockStyleChange={_onBlockStyleChange} />
       <div style={inputBoxStyle}>
       
         <Editor
