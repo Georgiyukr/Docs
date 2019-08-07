@@ -3,7 +3,7 @@ import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "./Register.css"
 
 
-export default class Login extends Component {
+export default class Register extends Component {
     constructor(props) {
         super(props);
 
@@ -26,6 +26,26 @@ export default class Login extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
+
+
+        fetch("http://localhost:4000/db/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password
+            })
+        }).then(res => res.json()).then(res => {
+            console.log(res);
+
+        }).catch(err => {
+            console.log(err)
+
+        })
+
+
     }
 
 
@@ -90,6 +110,9 @@ export default class Login extends Component {
                                 borderRadius: 6,
                                 backgroundColor: "white",
                             }}
+                            onClick={(e) => {
+                                this.handleSubmit(e)
+                            }}
 
                         >
                             Register
@@ -114,4 +137,5 @@ const button = {
     padding: 9,
 
 }
+
 

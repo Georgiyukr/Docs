@@ -25,13 +25,11 @@ export default class Login extends Component {
   };
 
   handleSubmit = event => {
-    event.preventDefault();
+    event.preventDefault()
 
 
-    fetch("http://192.168.1.79:4000/db/login", {
+    fetch("http://localhost:4000/db/login", {
       method: "POST",
-      redirect: "follow",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json"
       },
@@ -41,10 +39,10 @@ export default class Login extends Component {
       })
     }).then(res => res.json()).then(res => {
       console.log(res);
-      return <Redirect to="/editorPage" />
+
     }).catch(err => {
       console.log(err)
-      return <Redirect to="/" />
+
     })
 
 
@@ -121,7 +119,10 @@ export default class Login extends Component {
                 borderRadius: 6,
                 backgroundColor: "white"
               }}
-              onClick={this.handleSubmit}
+              onClick={(e) => {
+                console.log(this.state)
+                this.handleSubmit(e)
+              }}
             >
               Login
           </Button>
@@ -162,4 +163,6 @@ const button = {
   padding: 9,
 
 }
+
+
 

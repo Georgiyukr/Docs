@@ -6,7 +6,7 @@ function PortalPage(props) {
   const [documentState, setDocumentState] = useState([]);
   const [newDoc, setNewDocState] = useState("");
   useEffect(() => {
-    fetch("http://192.168.1.79:4000/db/userDocuments")
+    fetch("http://localhost:4000/db/userDocuments")
       .then(response => response.json())
       .then(responseJson => {
         console.log(responseJson)
@@ -15,7 +15,7 @@ function PortalPage(props) {
       .catch(err => {
         console.log("ERROR IS IN USE EFFECT", err);
       });
-  }, []);
+  }, [])
 
   function handleTyping(event) {
     setNewDocState(event.target.value);
@@ -23,7 +23,7 @@ function PortalPage(props) {
 
   function addDocument(event) {
     event.preventDefault();
-    fetch("http://192.168.1.79:4000/db/createDocument", {
+    fetch("http://localhost:4000/db/createDocument", {
       method: "POST",
       body: JSON.stringify({ docName: newDoc })
     })
