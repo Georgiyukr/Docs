@@ -59,7 +59,6 @@ export default class Login extends Component {
         >
           <FormGroup controlId="username" bsSize="large">
             <label>Username</label>
-
             <FormControl
               autoFocus
               type="string"
@@ -76,7 +75,6 @@ export default class Login extends Component {
           </FormGroup>
           <FormGroup controlId="password" bsSize="large">
             <label>Password</label>
-
             <FormControl
               value={this.state.password}
               onChange={this.handleChange}
@@ -114,7 +112,11 @@ export default class Login extends Component {
               bsSize="large"
               type="submit"
               style={{ borderRadius: 6, backgroundColor: "white" }}
-              onClick={() => <Redirect to="/register" />}
+              onClick={e => {
+                e.preventDefault();
+                console.log("trying to redirect");
+                return <Redirect to="/register" />;
+              }}
             >
               Go to Register
             </Button>

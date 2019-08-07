@@ -8,11 +8,10 @@ import PortalPage from "./containers/PortalPage";
 function App() {
   return (
     <BrowserRouter>
-      <Route path="/portalPage" exact={true} component={PortalPage} />
-
       <Route path="/" exact={true} component={Login} />
       <Route path="/register" exact={true} component={Register} />
       <Route path="/editorPage" exact={true} component={EditorPage} />
+      <Route path="/portalPage" exact={true} component={PortalPage} />
     </BrowserRouter>
   );
 }
