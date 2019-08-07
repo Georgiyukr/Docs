@@ -3,7 +3,6 @@ import { Button, FormGroup, FormControl } from "react-bootstrap";
 import { Redirect } from "react-router";
 import "./Login.css";
 
-
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -27,11 +26,8 @@ export default class Login extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-
-    fetch("http://192.168.1.79:4000/db/login", {
+    fetch("http://localhost:4000/db/login", {
       method: "POST",
-      redirect: "follow",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json"
       },
@@ -39,28 +35,18 @@ export default class Login extends Component {
         username: this.state.username,
         password: this.state.password
       })
-    }).then(res => res.json()).then(res => {
-      console.log(res);
-      return <Redirect to="/editorPage" />
-    }).catch(err => {
-      console.log(err)
-      return <Redirect to="/" />
     })
-
-
-  }
-
-
-
-
-
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   render() {
-
-
-
     return (
-
       <div className="Login">
         <h1 style={text}>Log In to Docs!</h1>
 
@@ -72,11 +58,9 @@ export default class Login extends Component {
           }}
         >
           <FormGroup controlId="username" bsSize="large">
-
             <label>Username</label>
 
             <FormControl
-
               autoFocus
               type="string"
               value={this.state.username}
@@ -91,9 +75,7 @@ export default class Login extends Component {
             />
           </FormGroup>
           <FormGroup controlId="password" bsSize="large">
-
             <label>Password</label>
-
 
             <FormControl
               value={this.state.password}
@@ -109,41 +91,36 @@ export default class Login extends Component {
             />
           </FormGroup>
 
-          <div style={button}  >
-
+          <div style={button}>
             <Button
               block
               bsSize="large"
               disabled={!this.validateForm()}
               type="submit"
-
               style={{
                 borderRadius: 6,
                 backgroundColor: "white"
               }}
-              onClick={this.handleSubmit}
+              onClick={e => {
+                console.log(this.state);
+                this.handleSubmit(e);
+              }}
             >
               Login
-          </Button>
-
-
+            </Button>
 
             <Button
               block
               bsSize="large"
               type="submit"
-
-
-
               style={{ borderRadius: 6, backgroundColor: "white" }}
               onClick={() => <Redirect to="/register" />}
             >
               Go to Register
             </Button>
           </div>
-
         </form>
-      </div >
+      </div>
     );
   }
 }
@@ -158,8 +135,5 @@ const form = {
   height: 200
 };
 const button = {
-
-  padding: 9,
-
-}
-
+  padding: 9
+};
