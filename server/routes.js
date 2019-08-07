@@ -75,35 +75,7 @@ router.get("/logout", function (req, res) {
     res.send("logout");
 });
 
-router.get("/userDocuments", function (req, res) {
-    let docIDArr = req.user.collaboratorOn;
-    let docArr = []
-    let count = 0;
 
-    docIDArr.forEach(docID => {
-        count += 1
-
-        Document.findById(docID).exec(function (err, data) {
-            if (!err) {
-                docArr.push(data);
-
-            } else {
-                console.log(err);
-            }
-
-        });
-        if (count === docIDArr.length) {
-            res.send(docArr);
-
-        }
-
-    })
-
-
-
-
-
-})
 
 router.post("/createDocument", function (req, res) {
     let newDoc = new Document({
@@ -113,16 +85,18 @@ router.post("/createDocument", function (req, res) {
         collaborators: [req.user._id]
 
     });
-    newDoc.save().exec(function (err) {
-        if (!err) {
-            console.log("saved")
-            res.send("saved")
-        } else {
-            console.log(err);
-            res.send("error")
-        }
+    newDoc.save().then(resp => resp.json).then(resp => {
+        console.log("saved")
+        res.send({ data: newDoc, success: true })
+
+    }).catch(err => {
+        console.log(err);
+        res.send("error")
 
     })
+
+
+
 
 
 })

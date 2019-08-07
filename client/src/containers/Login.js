@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 import "./Login.css"
 
 
@@ -25,7 +26,29 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
+    fetch("http://192.168.1.79:4000/db/login", {
+      method: "POST",
+      redirect: "follow",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      })
+    }).then(res => res.json()).then(res => {
+      console.log(res);
+      return <Redirect to="/editorPage" />
+    }).catch(err => {
+      console.log(err)
+      return <Redirect to="/" />
+    })
+
   }
+
+
 
   render() {
     return (
@@ -33,11 +56,12 @@ export default class Login extends Component {
 
         <h1 style={text}>Log In to Docs!</h1>
         <form onSubmit={this.handleSubmit} style={form} style={{
-        marginLeft:500     }}>
+          marginLeft: 500
+        }}>
           <FormGroup controlId="username" bsSize="large">
-            <ControlLabel>Username</ControlLabel>
+            <label>Username</label>
             <FormControl
-    
+
               autoFocus
               type="string"
               value={this.state.username}
@@ -52,7 +76,7 @@ export default class Login extends Component {
             />
           </FormGroup>
           <FormGroup controlId="password" bsSize="large">
-            <ControlLabel>Password</ControlLabel>
+            <label>Password</label>
             <FormControl
               value={this.state.password}
               onChange={this.handleChange}
@@ -67,30 +91,35 @@ export default class Login extends Component {
             />
           </FormGroup>
           <div style={button}  >
-          <Button 
-            block
-            bsSize="large"
-            disabled={!this.validateForm()}
-            type="submit"
-            style={{ borderRadius: 6,
-              backgroundColor:"white"
-            }}
-          >
-            Login
+            <Button
+              block
+              bsSize="large"
+              disabled={!this.validateForm()}
+              type="submit"
+              style={{
+                borderRadius: 6,
+                backgroundColor: "white"
+              }}
+              onClick={this.handleSubmit}
+            >
+              Login
           </Button>
-          <Button 
-            block
-            bsSize="large"
-            type="submit"
-            style={{ borderRadius: 6,
-              backgroundColor:"white",
+            <Button
+              block
+              bsSize="large"
+              type="submit"
+              style={{
+                borderRadius: 6,
+                backgroundColor: "white",
+
+              }}
               
-            }}
-          >
-            Register
+
+            >
+              Register
           </Button>
           </ div>
-          
+
         </form>
       </div>
     );
@@ -101,12 +130,12 @@ const text = {
   justifyContent: "center"
 }
 
-const form ={
+const form = {
   width: 100,
   height: 200
 }
 const button = {
   padding: 9,
-  
+
 }
 
