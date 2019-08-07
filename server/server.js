@@ -4,10 +4,12 @@ const dbRoutes = require("./routes");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const cors = require('cors');
 mongoose.connect(process.env.MONGODB_URI);
 
 var session = require("express-session");
 
+app.use(cors());
 app.use(express.static("public"));
 app.use(
     session({

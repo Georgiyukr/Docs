@@ -65,7 +65,7 @@ passport.use(
 );
 
 router.post("/login", passport.authenticate("local"), function (req, res) {
-    res.json(req.user);
+    res.send(req.user);
 });
 
 router.get("/logout", function (req, res) {
@@ -74,7 +74,7 @@ router.get("/logout", function (req, res) {
 });
 
 router.get("/userDocuments", function (req, res) {
-    // //console.log(req.user);
+    console.log(req.user);
     // res.send(req.user)
     let docIDArr = req.user.collaboratorOn;
     let docArr = [];
@@ -97,7 +97,7 @@ router.get("/userDocuments", function (req, res) {
                 console.log(err);
             }
         });
-        
+
     });
 });
 
