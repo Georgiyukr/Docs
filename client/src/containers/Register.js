@@ -3,13 +3,15 @@ import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "./Register.css"
 
 
-export default class Login extends Component {
+export default class Register extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      registerSuccess: false,
+      registerFail: false
     };
   }
 
@@ -26,9 +28,32 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    fetch("http://192.168.1.51:4000/db/register", {
+      method: "POST",
+      redirect: "follow",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      })
+    }).then(res => res.json()).then(res => {
+      console.log(res);
+      this.setState({
+        registerSuccess:true
+      })
+      return 
+    }).catch(err => {
+      console.log(err);
+      
+    })
   }
 
-  
+  handleSubmit =() => {
+    this.props.history.push(`/`);
+  }
 
   render() {
     return (
@@ -88,7 +113,7 @@ export default class Login extends Component {
             style={{ borderRadius: 6,
               backgroundColor:"white",
             }}
-            
+            onClick={this.handleSubmit}
           >
             Register
           </Button>

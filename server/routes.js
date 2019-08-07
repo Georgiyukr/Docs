@@ -73,51 +73,7 @@ router.get("/logout", function(req, res) {
   res.send("logout");
 });
 
-<<<<<<< HEAD
 
-
-router.post("/createDocument", function (req, res) {
-    let newDoc = new Document({
-        title: req.body.docName,
-=======
-router.get("/userDocuments", function(req, res) {
-  let docIDArr = req.user.collaboratorOn;
-  let docArr = [];
-  let count = 0;
->>>>>>> 8a7d367f22790b85163d75c6fd50bdbe07b01109
-
-  docIDArr.forEach(docID => {
-    count += 1;
-
-    Document.findById(docID).exec(function(err, data) {
-      if (!err) {
-        docArr.push(data);
-      } else {
-        console.log(err);
-      }
-    });
-<<<<<<< HEAD
-    newDoc.save().then(resp => resp.json).then(resp => {
-        console.log("saved")
-        res.send({ data: newDoc, success: true })
-
-    }).catch(err => {
-        console.log(err);
-        res.send("error")
-
-    })
-
-
-
-
-
-})
-=======
-    if (count === docIDArr.length) {
-      res.send(docArr);
-    }
-  });
-});
 
 router.post("/createDocument", function(req, res) {
   let newDoc = new Document({
@@ -136,6 +92,5 @@ router.post("/createDocument", function(req, res) {
     }
   });
 });
->>>>>>> 8a7d367f22790b85163d75c6fd50bdbe07b01109
 
 module.exports = router;

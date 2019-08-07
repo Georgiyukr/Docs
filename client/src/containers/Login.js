@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import { Redirect } from "react-router";
 import "./Login.css";
+import { NavLink } from 'react-router-dom'
+import { withRouter } from "react-router-dom";
+
 
 
 export default class Login extends Component {
@@ -10,7 +13,9 @@ export default class Login extends Component {
 
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      loginSuccess:false,
+      loginFail:false
     };
   }
 
@@ -19,32 +24,45 @@ export default class Login extends Component {
   }
 
   handleChange = event => {
+    event.preventDefault();
+    // console.log('handle change function');
     this.setState({
       [event.target.id]: event.target.value
     });
+    // console.log(this.state.username);
   };
+  
+  handleOnSubmit  =() => {
+    
+     this.props.history.push(`/register`);
+    }; 
 
   handleSubmit = event => {
     event.preventDefault();
 
-
-    fetch("http://192.168.1.79:4000/db/login", {
+    fetch("http://localhost:4000/db/login", {
       method: "POST",
-      redirect: "follow",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      // redirect: "follow",
+      // credentials: "include",
+      // headers: {
+      //   "Content-Type": "application/json"
+      // },
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password
       })
     }).then(res => res.json()).then(res => {
       console.log(res);
-      return <Redirect to="/editorPage" />
+      this.setState({
+        loginSuccess:true
+      })
+      return 
     }).catch(err => {
-      console.log(err)
-      return <Redirect to="/" />
+      console.log(err);
+      this.setState({
+        loginFail:true
+      })
+      
     })
 
 
@@ -58,18 +76,20 @@ export default class Login extends Component {
   render() {
     return (
       <div className="Login">
-        <h1 style={text}>Log In to Docs!</h1>
+        {this.state.loginSuccess ?<h1 style={text}>Log In to Docs!</h1> : <Redirect to="/editorPage" />}
+        {this.state.loginFail ?<h1 style={text}>Log In Fail!</h1> :<Redirect to="/" />}
+       
 
         <form
           onSubmit={this.handleSubmit}
-          style={form}
+          style={form} 
           style={{
             marginLeft: 500
           }}
         >
           <FormGroup controlId="username" bsSize="large">
 
-            <Label>Username</Label>
+            <label>Username</label>
 
             <FormControl
 
@@ -132,7 +152,9 @@ export default class Login extends Component {
 
 
               style={{ borderRadius: 6, backgroundColor: "white" }}
-              onClick={() => <Redirect to="/register" />}
+              
+              onClick={this.handleOnSubmit}
+              
             >
               Go to Register
             </Button>
