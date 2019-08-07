@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
-import "./Register.css"
-
+import "./Register.css";
 
 export default class Register extends Component {
   constructor(props) {
@@ -23,15 +22,13 @@ export default class Register extends Component {
     this.setState({
       [event.target.id]: event.target.value
     });
-    
-  }
+  };
 
   handleSubmit = event => {
     event.preventDefault();
-    fetch("http://192.168.1.51:4000/db/register", {
+
+    fetch("http://localhost:4000/db/register", {
       method: "POST",
-      redirect: "follow",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json"
       },
@@ -39,33 +36,32 @@ export default class Register extends Component {
         username: this.state.username,
         password: this.state.password
       })
-    }).then(res => res.json()).then(res => {
-      console.log(res);
-      this.setState({
-        registerSuccess:true
-      })
-      return 
-    }).catch(err => {
-      console.log(err);
-      
     })
-  }
-
-  handleSubmit =() => {
-    this.props.history.push(`/`);
-  }
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        this.props.history.push(`/`);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+      
+  };
 
   render() {
     return (
-      <div className="Login" >
-
+      <div className="Login">
         <h1 style={text}>Registration Page</h1>
-        <form onSubmit={this.handleSubmit} style={form} style={{
-        marginLeft:500     }}>
+        <form
+          onSubmit={this.handleSubmit}
+          style={form}
+          style={{
+            marginLeft: 500
+          }}
+        >
           <FormGroup controlId="username" bsSize="large">
             <label>Username</label>
             <FormControl
-    
               autoFocus
               type="string"
               value={this.state.username}
@@ -94,8 +90,8 @@ export default class Register extends Component {
               }}
             />
           </FormGroup>
-          <div style={button}  >
-          {/* <Button 
+          <div style={button}>
+            {/* <Button 
             block
             bsSize="large"
             disabled={!this.validateForm()}
@@ -106,19 +102,21 @@ export default class Register extends Component {
           >
             Login
           </Button> */}
-          <Button 
-            block
-            bsSize="large"
-            type="submit"
-            style={{ borderRadius: 6,
-              backgroundColor:"white",
-            }}
-            onClick={this.handleSubmit}
-          >
-            Register
-          </Button>
-          </ div>
-          
+            <Button
+              block
+              bsSize="large"
+              type="submit"
+              style={{
+                borderRadius: 6,
+                backgroundColor: "white"
+              }}
+              onClick={e => {
+                this.handleSubmit(e);
+              }}
+            >
+              Register
+            </Button>
+          </div>
         </form>
       </div>
     );
@@ -127,14 +125,12 @@ export default class Register extends Component {
 const text = {
   display: "flex",
   justifyContent: "center"
-}
+};
 
-const form ={
+const form = {
   width: 100,
   height: 200
-}
+};
 const button = {
-  padding: 9,
-  
-}
-
+  padding: 9
+};

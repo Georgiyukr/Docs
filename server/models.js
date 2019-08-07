@@ -24,6 +24,9 @@ const documentSchema = new Schema({
     type: String,
     required: true
   },
+  content: {
+    type: Object
+  },
   password: {
     type: String,
     required: false

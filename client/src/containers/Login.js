@@ -6,7 +6,6 @@ import { NavLink } from 'react-router-dom'
 import { withRouter } from "react-router-dom";
 
 
-
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -42,36 +41,23 @@ export default class Login extends Component {
 
     fetch("http://localhost:4000/db/login", {
       method: "POST",
-      // redirect: "follow",
-      // credentials: "include",
-      // headers: {
-      //   "Content-Type": "application/json"
-      // },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password
       })
-    }).then(res => res.json()).then(res => {
-      console.log(res);
-      this.setState({
-        loginSuccess:true
-      })
-      return 
-    }).catch(err => {
-      console.log(err);
-      this.setState({
-        loginFail:true
-      })
-      
     })
-
-
-  }
-
-
-
-
-
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   render() {
     return (
@@ -88,11 +74,8 @@ export default class Login extends Component {
           }}
         >
           <FormGroup controlId="username" bsSize="large">
-
             <label>Username</label>
-
             <FormControl
-
               autoFocus
               type="string"
               value={this.state.username}
@@ -107,10 +90,7 @@ export default class Login extends Component {
             />
           </FormGroup>
           <FormGroup controlId="password" bsSize="large">
-
             <label>Password</label>
-
-
             <FormControl
               value={this.state.password}
               onChange={this.handleChange}
@@ -125,43 +105,40 @@ export default class Login extends Component {
             />
           </FormGroup>
 
-          <div style={button}  >
-
+          <div style={button}>
             <Button
               block
               bsSize="large"
               disabled={!this.validateForm()}
               type="submit"
-
               style={{
                 borderRadius: 6,
                 backgroundColor: "white"
               }}
-              onClick={this.handleSubmit}
+              onClick={e => {
+                console.log(this.state);
+                this.handleSubmit(e);
+              }}
             >
               Login
-          </Button>
-
-
+            </Button>
 
             <Button
               block
               bsSize="large"
               type="submit"
-
-
-
               style={{ borderRadius: 6, backgroundColor: "white" }}
-              
-              onClick={this.handleOnSubmit}
-              
+              onClick={e => {
+                e.preventDefault();
+                console.log("trying to redirect");
+                return <Redirect to="/register" />;
+              }}
             >
               Go to Register
             </Button>
           </div>
-
         </form>
-      </div >
+      </div>
     );
   }
 }
@@ -176,8 +153,5 @@ const form = {
   height: 200
 };
 const button = {
-
-  padding: 9,
-
-}
-
+  padding: 9
+};
