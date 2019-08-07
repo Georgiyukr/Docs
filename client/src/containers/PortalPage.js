@@ -9,13 +9,13 @@ function PortalPage(props) {
     fetch("http://localhost:4000/db/userDocuments")
       .then(response => response.json())
       .then(responseJson => {
-        console.log(responseJson)
+        console.log(responseJson);
         setDocumentState(responseJson);
       })
       .catch(err => {
         console.log("ERROR IS IN USE EFFECT", err);
       });
-  }, [])
+  }, []);
 
   function handleTyping(event) {
     setNewDocState(event.target.value);
