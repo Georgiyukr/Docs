@@ -6,9 +6,10 @@ function PortalPage(props) {
   const [documentState, setDocumentState] = useState([]);
   const [newDoc, setNewDocState] = useState("");
   useEffect(() => {
-    fetch("http://localhost:4000/db/userDocuments")
+    fetch("http://192.168.1.79:4000/db/userDocuments")
       .then(response => response.json())
       .then(responseJson => {
+        console.log(responseJson)
         setDocumentState(responseJson);
       })
       .catch(err => {
@@ -22,9 +23,9 @@ function PortalPage(props) {
 
   function addDocument(event) {
     event.preventDefault();
-    fetch("http://localhost:4000/db/createDocument", {
+    fetch("http://192.168.1.79:4000/db/createDocument", {
       method: "POST",
-      body: JSON.stringify({ name: newDoc })
+      body: JSON.stringify({ docName: newDoc })
     })
       .then(response => response.json())
       .then(responseJson => {
@@ -52,7 +53,7 @@ function PortalPage(props) {
       </div>
       <span>
         <input type="text" />
-        <button>Add Shared Document</button>
+        <button onClick={addDocument}>Add Shared Document</button>
       </span>
     </div>
   );

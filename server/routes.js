@@ -73,27 +73,33 @@ router.get("/logout", function (req, res) {
     res.send("logout");
 });
 
-// router.get("/userDocuments", function (req, res) {
-//     let docIDArr = req.user.collaboratorOn;
-//     let docArr = [];
-//     let count = 0;
+router.get("/userDocuments", function (req, res) {
+    // //console.log(req.user);
+    // res.send(req.user)
+    let docIDArr = req.user.collaboratorOn;
+    let docArr = [];
+    let count = 0;
 
-//     docIDArr.forEach(docID => {
-//         console.log(docID);
-//         count += 1;
+    docIDArr.forEach(docID => {
+        //console.log(docID);
 
-//         Document.findById(docID).exec(function (err, data) {
-//             if (!err) {
-//                 docArr.push(data);
-//             } else {
-//                 console.log(err);
-//             }
-//         });
-//         if (count === docIDArr.length) {
-//             res.send(docArr);
-//         }
-//     });
-// });
+
+        Document.findById(docID).exec(function (err, data) {
+            if (!err) {
+                console.log(data)
+                docArr.push(data);
+                count += 1;
+                if (count === docIDArr.length) {
+
+                    res.send(docArr);
+                }
+            } else {
+                console.log(err);
+            }
+        });
+        
+    });
+});
 
 router.post("/createDocument", function (req, res) {
     let newDoc = new Document({
@@ -102,15 +108,25 @@ router.post("/createDocument", function (req, res) {
         author: req.user._id,
         collaborators: [req.user._id]
     });
-    newDoc.save().exec(function (err) {
-        if (!err) {
-            console.log("saved");
-            res.send("saved");
-        } else {
-            console.log(err);
-            res.send("error");
-        }
-    });
+    newDoc.save().then(resp => {
+        console.log(resp);
+        User.findByIdAndUpdate(req.user._id,
+            { $addToSet: { collaboratorOn: resp._id } }).exec(err => {
+                if (err) {
+                    console.log(err)
+                    res.send(err);
+
+                }
+                else {
+                    res.send(resp);
+
+                }
+
+            })
+
+    }).catch(err => {
+        console.log(err);
+    })
 });
 
 module.exports = router;
