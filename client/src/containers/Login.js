@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
-import "./Login.css"
+import { Redirect } from "react-router";
+import "./Login.css";
 
 
 export default class Login extends Component {
@@ -22,10 +22,11 @@ export default class Login extends Component {
     this.setState({
       [event.target.id]: event.target.value
     });
-  }
+  };
 
   handleSubmit = event => {
     event.preventDefault();
+
 
     fetch("http://192.168.1.79:4000/db/login", {
       method: "POST",
@@ -46,20 +47,30 @@ export default class Login extends Component {
       return <Redirect to="/" />
     })
 
+
   }
+
+
+
 
 
 
   render() {
     return (
-      <div className="Login" >
-
+      <div className="Login">
         <h1 style={text}>Log In to Docs!</h1>
-        <form onSubmit={this.handleSubmit} style={form} style={{
-          marginLeft: 500
-        }}>
+
+        <form
+          onSubmit={this.handleSubmit}
+          style={form}
+          style={{
+            marginLeft: 500
+          }}
+        >
           <FormGroup controlId="username" bsSize="large">
-            <label>Username</label>
+
+            <Label>Username</Label>
+
             <FormControl
 
               autoFocus
@@ -76,7 +87,10 @@ export default class Login extends Component {
             />
           </FormGroup>
           <FormGroup controlId="password" bsSize="large">
+
             <label>Password</label>
+
+
             <FormControl
               value={this.state.password}
               onChange={this.handleChange}
@@ -90,12 +104,15 @@ export default class Login extends Component {
               }}
             />
           </FormGroup>
+
           <div style={button}  >
+
             <Button
               block
               bsSize="large"
               disabled={!this.validateForm()}
               type="submit"
+
               style={{
                 borderRadius: 6,
                 backgroundColor: "white"
@@ -104,37 +121,40 @@ export default class Login extends Component {
             >
               Login
           </Button>
+
+
+
             <Button
               block
               bsSize="large"
               type="submit"
-              style={{
-                borderRadius: 6,
-                backgroundColor: "white",
 
-              }}
-              
 
+
+              style={{ borderRadius: 6, backgroundColor: "white" }}
+              onClick={() => <Redirect to="/register" />}
             >
-              Register
-          </Button>
-          </ div>
+              Go to Register
+            </Button>
+          </div>
 
         </form>
-      </div>
+      </div >
     );
   }
 }
+
 const text = {
   display: "flex",
   justifyContent: "center"
-}
+};
 
 const form = {
   width: 100,
   height: 200
-}
+};
 const button = {
+
   padding: 9,
 
 }

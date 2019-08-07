@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { Editor, EditorState, RichUtils, Modifier } from "draft-js";
 import Toolbar from "./Toolbar";
 
-
 function EditBox({ editorState, onChange }) {
   const editBoxStyle = {
     background: "#fff",
