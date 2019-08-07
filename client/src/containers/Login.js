@@ -1,7 +1,14 @@
 import React, { Component } from "react";
+<<<<<<< HEAD
+import { Button, FormGroup, FormControl, Label } from "react-bootstrap";
+import "./Login.css"
+
+=======
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import { Redirect } from "react-router";
 import "./Login.css";
+>>>>>>> 81edfc9556d67082b9f730aca749eacb1d5910b9
+
 
 export default class Login extends Component {
   constructor(props) {
@@ -25,7 +32,13 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+<<<<<<< HEAD
+    // <Redirect to="/register"/>;
+    
+  }
+=======
   };
+>>>>>>> 81edfc9556d67082b9f730aca749eacb1d5910b9
 
   render() {
     return (
@@ -39,7 +52,11 @@ export default class Login extends Component {
           }}
         >
           <FormGroup controlId="username" bsSize="large">
+<<<<<<< HEAD
+            <Label>Username</Label>
+=======
             <FormLabel>Username</FormLabel>
+>>>>>>> 81edfc9556d67082b9f730aca749eacb1d5910b9
             <FormControl
               autoFocus
               type="string"
@@ -55,7 +72,11 @@ export default class Login extends Component {
             />
           </FormGroup>
           <FormGroup controlId="password" bsSize="large">
+<<<<<<< HEAD
+            <Label>Password</Label>
+=======
             <FormLabel>Password</FormLabel>
+>>>>>>> 81edfc9556d67082b9f730aca749eacb1d5910b9
             <FormControl
               value={this.state.password}
               onChange={this.handleChange}
