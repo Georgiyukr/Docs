@@ -8,7 +8,9 @@ export default class Register extends Component {
 
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      registerSuccess: false,
+      registerFail: false
     };
   }
 
@@ -38,10 +40,12 @@ export default class Register extends Component {
       .then(res => res.json())
       .then(res => {
         console.log(res);
+        this.props.history.push(`/`);
       })
       .catch(err => {
         console.log(err);
       });
+      
   };
 
   render() {
