@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Redirect } from "react-router";
 import "./Login.css";
 
 export default class Login extends Component {
@@ -83,8 +84,9 @@ export default class Login extends Component {
               bsSize="large"
               type="submit"
               style={{ borderRadius: 6, backgroundColor: "white" }}
+              onClick={() => <Redirect to="/register" />}
             >
-              Register
+              Go to Register
             </Button>
           </div>
         </form>
