@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { Editor, EditorState, RichUtils, Modifier } from "draft-js";
+import {
+  Editor,
+  EditorState,
+  RichUtils,
+  Modifier,
+  convertToRaw
+} from "draft-js";
 import Toolbar from "./Toolbar";
 
 function EditBox({ editorState, onChange }) {
@@ -114,6 +120,16 @@ function EditBox({ editorState, onChange }) {
   //   ))
 
   // }
+  const saveDocument = content => {
+    fetch("/:docID/saveDoc", {
+      //will prob have to pass in actual docID to fetch here
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(convertToRaw(content))
+    }).catch(err => console.log(err));
+  };
 
   return (
     <div style={whole}>
@@ -129,7 +145,12 @@ function EditBox({ editorState, onChange }) {
           <Editor
             blockStyleFn={myBlockStyleFn}
             editorState={editorState}
-            onChange={onChange}
+            onChange={() => {
+              const contentState = editorState.getCurrentContent();
+              // console.log("content state", convertToRaw(contentState));
+              saveDocument(contentState);
+              onChange(editorState);
+            }}
             placeholder="Type below this line"
           />
         </div>

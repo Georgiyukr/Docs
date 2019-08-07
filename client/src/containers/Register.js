@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, FormLabel,Label } from "react-bootstrap";
-import "./Register.css"
-
+import { Button, FormGroup, FormControl } from "react-bootstrap";
+import "./Register.css";
 
 export default class Login extends Component {
   constructor(props) {
@@ -21,26 +20,26 @@ export default class Login extends Component {
     this.setState({
       [event.target.id]: event.target.value
     });
-    
-  }
+  };
 
   handleSubmit = event => {
     event.preventDefault();
-  }
-
-  
+  };
 
   render() {
     return (
-      <div className="Login" >
-
+      <div className="Login">
         <h1 style={text}>Registration Page</h1>
-        <form onSubmit={this.handleSubmit} style={form} style={{
-        marginLeft:500     }}>
+        <form
+          onSubmit={this.handleSubmit}
+          style={form}
+          style={{
+            marginLeft: 500
+          }}
+        >
           <FormGroup controlId="username" bsSize="large">
-            <Label>Username</Label>
+            <label>Username</label>
             <FormControl
-    
               autoFocus
               type="string"
               value={this.state.username}
@@ -55,7 +54,7 @@ export default class Login extends Component {
             />
           </FormGroup>
           <FormGroup controlId="password" bsSize="large">
-            <Label>Password</Label>
+            <label>Password</label>
             <FormControl
               value={this.state.password}
               onChange={this.handleChange}
@@ -69,8 +68,8 @@ export default class Login extends Component {
               }}
             />
           </FormGroup>
-          <div style={button}  >
-          {/* <Button 
+          <div style={button}>
+            {/* <Button 
             block
             bsSize="large"
             disabled={!this.validateForm()}
@@ -81,19 +80,15 @@ export default class Login extends Component {
           >
             Login
           </Button> */}
-          <Button 
-            block
-            bsSize="large"
-            type="submit"
-            style={{ borderRadius: 6,
-              backgroundColor:"white",
-            }}
-            
-          >
-            Register
-          </Button>
-          </ div>
-          
+            <Button
+              block
+              bsSize="large"
+              type="submit"
+              style={{ borderRadius: 6, backgroundColor: "white" }}
+            >
+              Register
+            </Button>
+          </div>
         </form>
       </div>
     );
@@ -102,14 +97,12 @@ export default class Login extends Component {
 const text = {
   display: "flex",
   justifyContent: "center"
-}
+};
 
-const form ={
+const form = {
   width: 100,
   height: 200
-}
+};
 const button = {
-  padding: 9,
-  
-}
-
+  padding: 9
+};
