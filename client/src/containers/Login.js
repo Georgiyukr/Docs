@@ -69,7 +69,7 @@ export default class Login extends Component {
         >
           <FormGroup controlId="username" bsSize="large">
 
-            <Label>Username</Label>
+            <label>Username</label>
 
             <FormControl
 
