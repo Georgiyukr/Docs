@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
+import { Redirect } from "react-router";
 import "./Login.css";
 
 export default class Login extends Component {
@@ -25,13 +25,31 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    // <Redirect to="/register"/>;
+
+    fetch("http://localhost:4000/db/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
     return (
       <div className="Login">
         <h1 style={text}>Log In to Docs!</h1>
+
         <form
           onSubmit={this.handleSubmit}
           style={form}
@@ -70,16 +88,25 @@ export default class Login extends Component {
               }}
             />
           </FormGroup>
+
           <div style={button}>
             <Button
               block
               bsSize="large"
               disabled={!this.validateForm()}
               type="submit"
-              style={{ borderRadius: 6, backgroundColor: "white" }}
+              style={{
+                borderRadius: 6,
+                backgroundColor: "white"
+              }}
+              onClick={e => {
+                console.log(this.state);
+                this.handleSubmit(e);
+              }}
             >
               Login
             </Button>
+
             <Button
               block
               bsSize="large"
@@ -99,6 +126,7 @@ export default class Login extends Component {
     );
   }
 }
+
 const text = {
   display: "flex",
   justifyContent: "center"

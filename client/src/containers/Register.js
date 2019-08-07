@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "./Register.css";
 
-export default class Login extends Component {
+export default class Register extends Component {
   constructor(props) {
     super(props);
 
@@ -24,6 +24,24 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
+    fetch("http://localhost:4000/db/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
@@ -84,7 +102,13 @@ export default class Login extends Component {
               block
               bsSize="large"
               type="submit"
-              style={{ borderRadius: 6, backgroundColor: "white" }}
+              style={{
+                borderRadius: 6,
+                backgroundColor: "white"
+              }}
+              onClick={e => {
+                this.handleSubmit(e);
+              }}
             >
               Register
             </Button>
