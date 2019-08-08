@@ -64,14 +64,14 @@ export default class Login extends Component {
       console.log(err);
 
     })
-      .then(res => res.json())
-      .then(res => {
-        console.log(res);
+    //     .then(res => res.json())
+    //     .then(res => {
+    //       console.log(res);
 
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
   };
 
   render() {
