@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import { Redirect } from "react-router";
 import "./Login.css";
+import { NavLink } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 export default class Login extends Component {
   constructor(props) {
@@ -9,7 +11,9 @@ export default class Login extends Component {
 
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      loginSuccess: false,
+      loginFail: false
     };
   }
 
@@ -18,9 +22,16 @@ export default class Login extends Component {
   }
 
   handleChange = event => {
+    event.preventDefault();
+    // console.log('handle change function');
     this.setState({
       [event.target.id]: event.target.value
     });
+    // console.log(this.state.username);
+  };
+
+  handleOnSubmit = () => {
+    this.props.history.push(`/register`);
   };
 
   handleSubmit = event => {
@@ -40,23 +51,48 @@ export default class Login extends Component {
     })
       .then(res => res.json())
       .then(res => {
+        console.log("ye");
+        this.setState({
+          loginSuccess: true
+        });
         console.log(res);
       })
       .catch(err => {
+        console.log("caught");
+        this.setState({
+          loginFail: true
+        });
         console.log(err);
       });
   };
 
   render() {
+    if (this.state.loginSuccess) {
+      return <Redirect to="/portalPage" />;
+    }
+
+    if (this.state.loginFail) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div className="Login">
-        <h1 style={text}>Log In to Docs!</h1>
+        {this.state.loginSuccess ? (
+          <h1 style={text}>Log In to Docs!</h1>
+        ) : (
+          <Redirect to="/editorPage" />
+        )}
+        {this.state.loginFail ? (
+          <h1 style={text}>Log In Fail!</h1>
+        ) : (
+          <Redirect to="/" />
+        )}
 
         <form
           onSubmit={this.handleSubmit}
           style={form}
           style={{
-            marginLeft: 500
+            marginLeft: 300
           }}
         >
           <FormGroup controlId="username" bsSize="large">
