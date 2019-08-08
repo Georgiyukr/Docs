@@ -4,17 +4,21 @@ import { Editor, EditorState } from "draft-js";
 
 import EditBox from "../components/EditBox";
 import Headers from "../components/Headers";
+import { withRouter } from 'react-router-dom';
 
-function EditorPage() {
+
+
+function EditorPage(props) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
 
   return (
     <div className="pageContainer">
       <h1 className="text" style={textstyle}>
         Doc Page
       </h1>
-      <Headers />
-      <EditBox editorState={editorState} onChange={setEditorState} />
+      <Headers location={props.location} />
+      <EditBox location={props.location} editorState={editorState} onChange={setEditorState} />
     </div>
   );
 }
@@ -24,4 +28,4 @@ const textstyle = {
   justifyContent: "center"
 };
 
-export default EditorPage;
+export default withRouter(EditorPage);

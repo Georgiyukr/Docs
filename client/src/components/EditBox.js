@@ -121,14 +121,16 @@ function EditBox({ editorState, onChange }) {
 
   // }
   const saveDocument = content => {
-    fetch("/:docID/saveDoc", {
-      //will prob have to pass in actual docID to fetch here
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(convertToRaw(content))
-    }).catch(err => console.log(err));
+    // fetch("http://localhost:4000/db/:docID/saveDoc", {
+    //   //will prob have to pass in actual docID to fetch here
+    //   credentials: "include",
+    //   redirect: "follow",
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(convertToRaw(content))
+    // }).catch(err => console.log(err));
   };
 
   return (

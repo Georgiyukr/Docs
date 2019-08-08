@@ -127,7 +127,7 @@ module.exports = bigFunction = (passport) => {
             { content: req.body },
             (err, res) => {
                 if (err) {
-                    res.json({ success: false, error: "Unable to update doc." });
+                    res.json({ success: false, error: "Unable to update doc" });
                 } else {
                     res.json({ success: true, error: "" });
                 }
