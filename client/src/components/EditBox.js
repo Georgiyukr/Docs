@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import {
   Editor,
@@ -17,26 +17,7 @@ function EditBox({ editorState, onChange }) {
     fontSize: "14px",
     padding: "15px"
   };
-  // const inputBoxStyle = {
-  //   borderTop: "1px solid #ddd",
-  //   cursor: "text",
-  //   fontSize: "16px",
-  //   marginTop: "10px"
-  // };
 
-  // const editBoxStyle = {
-  //   background: "#fff",
-  //   border: "3px solid #ddd",
-  //   // fontFamily: "Georgia",
-  //   // fontSize: "50px",
-
-  //   width: 550,
-  //   height: 200,
-  //   justifyContent:"center",
-  //   padding: 40,
-  //   margin: 10
-
-  // };
   const inputBoxStyle = {
     borderTop: "1px solid #ddd",
     cursor: "text",
@@ -53,6 +34,25 @@ function EditBox({ editorState, onChange }) {
     marginTop: 50,
     height: 300
   };
+
+  // useEffect(() => {
+  //   fetch("localhost:3000/:docID/saveDoc", {
+  //     method: "POST",
+  //     credentials: "include",
+  //     redirect: "follow",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({ docID: params.docID })
+  //   })
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       console.log("res from posting docID to server side", res);
+  //     })
+  //     .catch(err => {
+  //       console.log("err in posting docID to server side", err);
+  //     });
+  // });
 
   const alignText = style => {
     let currentContent = editorState.getCurrentContent();
