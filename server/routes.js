@@ -1,6 +1,7 @@
 const express = require("express");
 const User = require("./models").User;
 const Document = require("./models").Document;
+const Mongodb = require("mongodb");
 
 module.exports = bigFunction = (passport) => {
     const router = express.Router();
@@ -79,7 +80,7 @@ module.exports = bigFunction = (passport) => {
         Document.find({ collaborators: req.user._id })
             .exec()
             .then(documents => {
-                console.log("docs", documents);
+                //console.log("docs", documents);
                 res.send({ docArr: documents });
             })
             .catch(err => {
@@ -134,6 +135,38 @@ module.exports = bigFunction = (passport) => {
             }
         );
     });
+
+    router.post("/addSharedDocument", (req, res) => {
+        Document.findByIdAndUpdate(new Mongodb.ObjectID(req.body.sharedDocID),
+            { $addToSet: { collaborators: req.user._id } }).exec(err => {
+                if (err) {
+                    console.log(err)
+                    res.send(err);
+
+                }
+                else {
+                    User.findByIdAndUpdate(req.user._id,
+                        { $addToSet: { collaboratorOn: new Mongodb.ObjectID(req.body.sharedDocID) } }).exec(err => {
+                            if (err) {
+                                console.log(err)
+                                res.send(err);
+
+                            }
+                            else {
+                                console.log("I need this!!")
+                                res.send("success");
+
+                            }
+
+                        })
+
+                }
+
+            })
+
+
+
+    })
 
     return router;
 }
