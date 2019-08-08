@@ -117,7 +117,19 @@ module.exports = bigFunction = passport => {
   router.get("/editorPage/docID", (req, res) => {
     //change link to route in portalpage.js to link to this route
     //display the document in editor view
+    console.log("hitting route");
+    console.log("docID", req.params.docID);
+    Document.findById(req.params.docID, (err, doc) => {
+      if (err) {
+        console.log("err finding clicked doc to display", err);
+      }
+      if (doc) {
+        console.log("doc that was found", doc);
+        res.send({ doc });
+      }
+    });
   });
+
   router.post("/:docID/saveDoc", (req, res) => {
     Document.update(
       { _id: req.params.docID },

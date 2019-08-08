@@ -35,25 +35,6 @@ function EditBox({ editorState, onChange }) {
     height: 300
   };
 
-  // useEffect(() => {
-  //   fetch("localhost:3000/:docID/saveDoc", {
-  //     method: "POST",
-  //     credentials: "include",
-  //     redirect: "follow",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify({ docID: params.docID })
-  //   })
-  //     .then(res => res.json())
-  //     .then(res => {
-  //       console.log("res from posting docID to server side", res);
-  //     })
-  //     .catch(err => {
-  //       console.log("err in posting docID to server side", err);
-  //     });
-  // });
-
   const alignText = style => {
     let currentContent = editorState.getCurrentContent();
     let selection = editorState.getSelection();
