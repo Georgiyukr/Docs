@@ -64,7 +64,6 @@ export default class Login extends Component {
       console.log(err);
 
     })
-
   };
 
   render() {
