@@ -64,15 +64,6 @@ export default class Login extends Component {
       console.log(err);
 
     })
-      .then(res => res.json())
-      .then(res => {
-        console.log(res);
-        // this.props.history.push(`/portalPage`);
-      })
-      .catch(err => {
-        console.log(err);
-        // alert("credentials are wrong")
-      });
   };
 
   render() {
@@ -168,7 +159,7 @@ export default class Login extends Component {
 const text = {
   display: "flex",
   justifyContent: "center",
-  
+
 };
 
 const form = {

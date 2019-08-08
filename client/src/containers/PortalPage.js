@@ -22,7 +22,7 @@ function PortalPage(props) {
 
   useEffect(() => {
     updateDocuments();
-  }, [documentState])
+  }, [])
 
   function handleTyping(event) {
     setNewDocState(event.target.value);
@@ -46,8 +46,10 @@ function PortalPage(props) {
     })
       .then(response => response.json())
       .then(responseJson => {
+        console.log(responseJson);
         if (responseJson.success) {
-          setDocumentState(documentState.push(responseJson.data));
+          setDocumentState(documentState.push(responseJson));
+          updateDocuments();
         }
       })
       .catch(err => {
