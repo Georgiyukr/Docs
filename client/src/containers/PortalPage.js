@@ -13,6 +13,7 @@ function PortalPage(props) {
       .then(responseJson => {
 
         setDocumentState(responseJson.docArr);
+        setNewDocState("");
         console.log(documentState);
       })
       .catch(err => {
@@ -47,22 +48,22 @@ function PortalPage(props) {
       .then(response => response.json())
       .then(responseJson => {
         console.log(responseJson);
-        if (responseJson.success) {
-          setDocumentState(documentState.push(responseJson));
-          updateDocuments();
-        }
+
+        documentState.push(responseJson);
+        updateDocuments();
+
       })
       .catch(err => {
         console.log("ERROR IS IN ADD DOC", err);
       });
-    setNewDocState("");
+
   }
 
   return (
     <div>
       <h1>Document Portal</h1>
       <span>
-        <input type="text" onChange={event => handleTyping(event)} />
+        <input type="text" onChange={event => handleTyping(event)} value={newDoc} />
         <button onClick={event => {
           console.log(newDoc)
           addDocument(event, newDoc)

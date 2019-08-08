@@ -80,25 +80,17 @@ module.exports = bigFunction = (passport) => {
         let docArr = [];
         let count = 0;
 
-        docIDArr.forEach(docID => {
-            //console.log(docID);
-            Document.findById(docID).sort().exec(function (err, data) {
-                if (!err) {
-                    //console.log(data)
-                    docArr.push(data);
-                    count += 1;
-                    if (count === docIDArr.length) {
-                        console.log("here goes the docArr", docArr)
+        Document.find({ collaborators: req.user._id }).exec()
+            .then(documents => {
+                console.log('docs', documents);
+                res.send(
+                    { docArr: documents });
+            })
+            .catch(err => {
+                console.log('err', err)
 
-                        res.send(
-                            { docArr: docArr });
-                    }
-                } else {
-                    console.log(err);
-                }
-            });
+            })
 
-        });
     });
 
     router.post("/createDocument", function (req, res) {
