@@ -28,6 +28,8 @@ export default class Login extends Component {
 
     fetch("http://localhost:4000/db/login", {
       method: "POST",
+      credentials: "include",
+      redirect: "follow",
       headers: {
         "Content-Type": "application/json"
       },
@@ -112,11 +114,7 @@ export default class Login extends Component {
               bsSize="large"
               type="submit"
               style={{ borderRadius: 6, backgroundColor: "white" }}
-              onClick={e => {
-                e.preventDefault();
-                console.log("trying to redirect");
-                return <Redirect to="/register" />;
-              }}
+              onClick={this.handleOnSubmit}
             >
               Go to Register
             </Button>

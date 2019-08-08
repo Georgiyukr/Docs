@@ -38,6 +38,7 @@ export default class Register extends Component {
       .then(res => res.json())
       .then(res => {
         console.log(res);
+        this.props.history.push("/"); //redirect to login page
       })
       .catch(err => {
         console.log(err);
