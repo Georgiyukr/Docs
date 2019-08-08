@@ -8,6 +8,8 @@ import {
   convertToRaw
 } from "draft-js";
 import Toolbar from "./Toolbar";
+import io from 'socket.io-client';
+const socket = io('http://localhost:4000');
 
 function EditBox({ editorState, onChange }) {
   const editBoxStyle = {
@@ -133,6 +135,12 @@ function EditBox({ editorState, onChange }) {
     // }).catch(err => console.log(err));
   };
 
+  // useEffect(() => {
+  //   socket.on("change", (data) => {
+  //     onChange(data);
+  //   })
+  // }, [editorState])
+
   return (
     <div style={whole}>
       <div style={editBoxStyle}>
@@ -152,6 +160,7 @@ function EditBox({ editorState, onChange }) {
               // console.log("content state", convertToRaw(contentState));
               onChange(editorState);
               saveDocument(contentState);
+              socket.emit("message", editorState);
             }}
             placeholder="Type below this line"
           />
