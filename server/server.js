@@ -9,7 +9,7 @@ mongoose.connect(process.env.MONGODB_URI);
 
 var session = require("express-session");
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.static("public"));
 app.use(
     session({
@@ -23,7 +23,7 @@ app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/db", dbRoutes);
+app.use("/db", require('./routes')(passport));
 
 app.listen(4000, () => {
     console.log("Listen on port 4000");

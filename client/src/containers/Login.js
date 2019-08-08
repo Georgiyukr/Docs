@@ -10,7 +10,9 @@ export default class Login extends Component {
 
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      loginSuccess: false,
+      loginFail: false
     };
   }
 
@@ -30,6 +32,8 @@ export default class Login extends Component {
 
     fetch("http://localhost:4000/db/login", {
       method: "POST",
+      credentials: "include",
+      redirect: 'follow',
       headers: {
         "Content-Type": "application/json"
       },
@@ -38,10 +42,17 @@ export default class Login extends Component {
         password: this.state.password
       })
     }).then(res => res.json()).then(res => {
+      console.log('ye');
+      this.setState({
+        loginSuccess: true
+      })
       console.log(res);
-
     }).catch(err => {
-      console.log(err)
+      console.log('caught');
+      this.setState({
+        loginFail: true
+      })
+      console.log(err);
 
     })
 
@@ -54,6 +65,13 @@ export default class Login extends Component {
 
 
   render() {
+    if (this.state.loginSuccess) {
+      return <Redirect to='/portalPage' />
+    }
+
+    if (this.state.loginFail) {
+      return <Redirect to="/" />
+    }
 
 
 
