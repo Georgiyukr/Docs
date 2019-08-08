@@ -148,8 +148,8 @@ function EditBox({ editorState, onChange }) {
             onChange={() => {
               const contentState = editorState.getCurrentContent();
               // console.log("content state", convertToRaw(contentState));
-              saveDocument(contentState);
               onChange(editorState);
+              saveDocument(contentState);
             }}
             placeholder="Type below this line"
           />

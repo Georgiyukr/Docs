@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 
-
 function PortalPage(props) {
   const [documentState, setDocumentState] = useState([]);
   const [newDoc, setNewDocState] = useState("");
 
   const updateDocuments = () => {
-    fetch("http://localhost:4000/db/userDocuments", { credentials: 'include' })
-      .then(response => { return response.json() })
+    fetch("http://localhost:4000/db/userDocuments", { credentials: "include" })
+      .then(response => {
+        return response.json();
+      })
       .then(responseJson => {
-
         setDocumentState(responseJson.docArr);
         setNewDocState("");
         console.log(documentState);
@@ -19,11 +19,11 @@ function PortalPage(props) {
       .catch(err => {
         console.log("ERROR IS IN USE EFFECT", err);
       });
-  }
+  };
 
   useEffect(() => {
     updateDocuments();
-  }, [])
+  }, []);
 
   function handleTyping(event) {
     setNewDocState(event.target.value);
@@ -70,13 +70,12 @@ function PortalPage(props) {
         }}>Create Document</button>
       </span>
       <ul>
-
         {documentState.map(d => (
-          <li><Link to="/">{d.title}</Link></li>
-
+          <li>
+            <Link to="/">{d.title}</Link>
+          </li>
         ))}
       </ul>
-
 
       <span>
         <input type="text" />

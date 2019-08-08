@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import { Redirect } from "react-router";
 import "./Login.css";
-import { NavLink } from 'react-router-dom'
+import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-
 
 export default class Login extends Component {
   constructor(props) {
@@ -32,7 +31,6 @@ export default class Login extends Component {
   };
 
   handleOnSubmit = () => {
-
     this.props.history.push(`/register`);
   };
 
@@ -42,7 +40,7 @@ export default class Login extends Component {
     fetch("http://localhost:4000/db/login", {
       method: "POST",
       credentials: "include",
-      redirect: 'follow',
+      redirect: "follow",
       headers: {
         "Content-Type": "application/json"
       },
@@ -50,39 +48,45 @@ export default class Login extends Component {
         username: this.state.username,
         password: this.state.password
       })
-    }).then(res => res.json()).then(res => {
-      console.log('ye');
-      this.setState({
-        loginSuccess: true
-      })
-      console.log(res);
-    }).catch(err => {
-      console.log('caught');
-      this.setState({
-        loginFail: true
-      })
-      console.log(err);
-
     })
-
+      .then(res => res.json())
+      .then(res => {
+        console.log("ye");
+        this.setState({
+          loginSuccess: true
+        });
+        console.log(res);
+      })
+      .catch(err => {
+        console.log("caught");
+        this.setState({
+          loginFail: true
+        });
+        console.log(err);
+      });
   };
 
   render() {
     if (this.state.loginSuccess) {
-      return <Redirect to='/portalPage' />
+      return <Redirect to="/portalPage" />;
     }
 
     if (this.state.loginFail) {
-      return <Redirect to="/" />
+      return <Redirect to="/" />;
     }
-
-
 
     return (
       <div className="Login">
-        {this.state.loginSuccess ? <h1 style={text}>Log In to Docs!</h1> : <Redirect to="/editorPage" />}
-        {this.state.loginFail ? <h1 style={text}>Log In Fail!</h1> : <Redirect to="/" />}
-
+        {this.state.loginSuccess ? (
+          <h1 style={text}>Log In to Docs!</h1>
+        ) : (
+          <Redirect to="/editorPage" />
+        )}
+        {this.state.loginFail ? (
+          <h1 style={text}>Log In Fail!</h1>
+        ) : (
+          <Redirect to="/" />
+        )}
 
         <form
           onSubmit={this.handleSubmit}
@@ -159,8 +163,7 @@ export default class Login extends Component {
 
 const text = {
   display: "flex",
-  justifyContent: "center",
-
+  justifyContent: "center"
 };
 
 const form = {

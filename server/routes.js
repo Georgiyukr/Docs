@@ -75,10 +75,7 @@ module.exports = bigFunction = (passport) => {
     });
 
     router.get("/userDocuments", function (req, res) {
-        //console.log("The user is:", req.user);
-        let docIDArr = req.user.collaboratorOn;
-        let docArr = [];
-        let count = 0;
+
 
         Document.find({ collaborators: req.user._id }).exec()
             .then(documents => {
@@ -90,6 +87,7 @@ module.exports = bigFunction = (passport) => {
                 console.log('err', err)
 
             })
+
 
     });
 
