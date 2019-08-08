@@ -71,7 +71,7 @@ export default class Login extends Component {
       })
       .catch(err => {
         console.log(err);
-        alert("credentials are wrong")
+        // alert("credentials are wrong")
       });
   };
 
