@@ -72,7 +72,7 @@ function PortalPage(props) {
       <ul>
         {documentState.map(d => (
           <li>
-            <Link to="/">{d.title}</Link>
+            <Link to={`/editorPage/${d._id}`}>{d.title}</Link>
           </li>
         ))}
       </ul>

@@ -65,6 +65,7 @@ module.exports = bigFunction = (passport) => {
         });
     });
 
+
     router.post("/login", passport.authenticate("local"), function (req, res) {
         res.send(req.user);
     });
@@ -75,20 +76,15 @@ module.exports = bigFunction = (passport) => {
     });
 
     router.get("/userDocuments", function (req, res) {
-
-
-        Document.find({ collaborators: req.user._id }).exec()
+        Document.find({ collaborators: req.user._id })
+            .exec()
             .then(documents => {
-                console.log('docs', documents);
-                res.send(
-                    { docArr: documents });
+                console.log("docs", documents);
+                res.send({ docArr: documents });
             })
             .catch(err => {
-                console.log('err', err)
-
-            })
-
-
+                console.log("err", err);
+            });
     });
 
     router.post("/createDocument", function (req, res) {
@@ -115,9 +111,28 @@ module.exports = bigFunction = (passport) => {
 
                 })
 
-        }).catch(err => {
-            console.log(err);
         })
+            .catch(err => {
+                console.log(err);
+            });
+    });
+
+    router.get("/editorPage/docID", (req, res) => {
+        //change link to route in portalpage.js to link to this route
+        //display the document in editor view
+    });
+    router.post("/:docID/saveDoc", (req, res) => {
+        Document.update(
+            { _id: req.params.docID },
+            { content: req.body },
+            (err, res) => {
+                if (err) {
+                    res.json({ success: false, error: "Unable to update doc." });
+                } else {
+                    res.json({ success: true, error: "" });
+                }
+            }
+        );
     });
 
     return router;
