@@ -13,8 +13,8 @@ export default class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      loginSuccess:false,
-      loginFail:false
+      loginSuccess: false,
+      loginFail: false
     };
   }
 
@@ -30,17 +30,19 @@ export default class Login extends Component {
     });
     // console.log(this.state.username);
   };
-  
-  handleOnSubmit  =() => {
-    
-     this.props.history.push(`/register`);
-    }; 
+
+  handleOnSubmit = () => {
+
+    this.props.history.push(`/register`);
+  };
 
   handleSubmit = event => {
     event.preventDefault();
 
     fetch("http://localhost:4000/db/login", {
       method: "POST",
+      credentials: "include",
+      redirect: 'follow',
       headers: {
         "Content-Type": "application/json"
       },
@@ -48,13 +50,25 @@ export default class Login extends Component {
         username: this.state.username,
         password: this.state.password
       })
+    }).then(res => res.json()).then(res => {
+      console.log('ye');
+      this.setState({
+        loginSuccess: true
+      })
+      console.log(res);
+    }).catch(err => {
+      console.log('caught');
+      this.setState({
+        loginFail: true
+      })
+      console.log(err);
+
     })
       .then(res => res.json())
       .then(res => {
         console.log(res);
-        
-        this.props.history.push(`/portalPage`);
-            })
+        // this.props.history.push(`/portalPage`);
+      })
       .catch(err => {
         console.log(err);
         alert("credentials are wrong")
@@ -62,14 +76,25 @@ export default class Login extends Component {
   };
 
   render() {
+    if (this.state.loginSuccess) {
+      return <Redirect to='/portalPage' />
+    }
+
+    if (this.state.loginFail) {
+      return <Redirect to="/" />
+    }
+
+
+
     return (
       <div className="Login">
-        <h1 style={text}>Log In to Docs!</h1> 
-       
+        {this.state.loginSuccess ? <h1 style={text}>Log In to Docs!</h1> : <Redirect to="/editorPage" />}
+        {this.state.loginFail ? <h1 style={text}>Log In Fail!</h1> : <Redirect to="/" />}
+
 
         <form
           onSubmit={this.handleSubmit}
-          style={form} 
+          style={form}
           style={{
             marginLeft: 300
           }}

@@ -1,29 +1,43 @@
 import React, { useState, useEffect } from "react";
 
-import ReactDOM, { Link } from "react-dom";
+import { Link } from "react-router-dom";
+
 
 function PortalPage(props) {
   const [documentState, setDocumentState] = useState([]);
   const [newDoc, setNewDocState] = useState("");
-  useEffect(() => {
-    fetch("http://localhost:4000/db/userDocuments")
-      .then(response => response.json())
+
+  const updateDocuments = () => {
+    fetch("http://localhost:4000/db/userDocuments", { credentials: 'include' })
+      .then(response => { return response.json() })
       .then(responseJson => {
-        console.log(responseJson);
-        setDocumentState(responseJson);
+
+        setDocumentState(responseJson.docArr);
+        console.log(documentState);
       })
       .catch(err => {
         console.log("ERROR IS IN USE EFFECT", err);
       });
-  }, []);
+  }
+
+  useEffect(() => {
+    updateDocuments();
+  }, [documentState])
 
   function handleTyping(event) {
     setNewDocState(event.target.value);
   }
 
-  function addDocument(event) {
+  function addDocument(event, newDoc) {
+    //console.log(JSON.stringify({ docName: newDoc }));
     event.preventDefault();
+
     fetch("http://localhost:4000/db/createDocument", {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -47,13 +61,20 @@ function PortalPage(props) {
       <h1>Document Portal</h1>
       <span>
         <input type="text" onChange={event => handleTyping(event)} />
-        <button onClick={event => addDocument(event)}>Create Document</button>
+        <button onClick={event => {
+          console.log(newDoc)
+          addDocument(event, newDoc)
+        }}>Create Document</button>
       </span>
-      <div>
+      <ul>
+
         {documentState.map(d => (
-          <Link to={`/${d._id}`}>{d.name}</Link>
+          <li><Link to="/">{d.title}</Link></li>
+
         ))}
-      </div>
+      </ul>
+
+
       <span>
         <input type="text" />
         <button onClick={addDocument}>Add Shared Document</button>
