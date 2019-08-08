@@ -134,13 +134,17 @@ module.exports = bigFunction = passport => {
     //display the document in editor view
   });
   router.post("/:docID/saveDoc", (req, res) => {
-    Document.update({ _id: docID }, { content: req.body }, (err, res) => {
-      if (err) {
-        res.json({ success: false, error: "Unable to update doc." });
-      } else {
-        res.json({ success: true, error: "" });
+    Document.update(
+      { _id: req.params.docID },
+      { content: req.body },
+      (err, res) => {
+        if (err) {
+          res.json({ success: false, error: "Unable to update doc." });
+        } else {
+          res.json({ success: true, error: "" });
+        }
       }
-    });
+    );
   });
 
   return router;
