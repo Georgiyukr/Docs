@@ -53,24 +53,25 @@ export default class Login extends Component {
       .then(res => {
         console.log(res);
         
-      })
+        this.props.history.push(`/portalPage`);
+            })
       .catch(err => {
         console.log(err);
+        alert("credentials are wrong")
       });
   };
 
   render() {
     return (
       <div className="Login">
-        {this.state.loginSuccess ?<h1 style={text}>Log In to Docs!</h1> : <Redirect to="/editorPage" />}
-        {this.state.loginFail ?<h1 style={text}>Log In Fail!</h1> :<Redirect to="/" />}
+        <h1 style={text}>Log In to Docs!</h1> 
        
 
         <form
           onSubmit={this.handleSubmit}
           style={form} 
           style={{
-            marginLeft: 500
+            marginLeft: 300
           }}
         >
           <FormGroup controlId="username" bsSize="large">
@@ -128,11 +129,7 @@ export default class Login extends Component {
               bsSize="large"
               type="submit"
               style={{ borderRadius: 6, backgroundColor: "white" }}
-              onClick={e => {
-                e.preventDefault();
-                console.log("trying to redirect");
-                return <Redirect to="/register" />;
-              }}
+              onClick={this.handleOnSubmit}
             >
               Go to Register
             </Button>
@@ -145,7 +142,8 @@ export default class Login extends Component {
 
 const text = {
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
+  
 };
 
 const form = {

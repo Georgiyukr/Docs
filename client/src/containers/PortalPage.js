@@ -25,6 +25,9 @@ function PortalPage(props) {
     event.preventDefault();
     fetch("http://localhost:4000/db/createDocument", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({ docName: newDoc })
     })
       .then(response => response.json())

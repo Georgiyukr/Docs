@@ -56,7 +56,7 @@ export default class Register extends Component {
           onSubmit={this.handleSubmit}
           style={form}
           style={{
-            marginLeft: 500
+            marginLeft: 300
           }}
         >
           <FormGroup controlId="username" bsSize="large">
