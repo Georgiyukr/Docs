@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import { Redirect } from "react-router";
 import "./Login.css";
+import { NavLink } from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 
 
 export default class Login extends Component {
@@ -21,14 +23,21 @@ export default class Login extends Component {
   }
 
   handleChange = event => {
+    event.preventDefault();
+    // console.log('handle change function');
     this.setState({
       [event.target.id]: event.target.value
     });
+    // console.log(this.state.username);
+  };
+
+  handleOnSubmit = () => {
+
+    this.props.history.push(`/register`);
   };
 
   handleSubmit = event => {
-    event.preventDefault()
-
+    event.preventDefault();
 
     fetch("http://localhost:4000/db/login", {
       method: "POST",
@@ -55,14 +64,15 @@ export default class Login extends Component {
       console.log(err);
 
     })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
 
-
-  }
-
-
-
-
-
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   render() {
     if (this.state.loginSuccess) {
@@ -76,9 +86,10 @@ export default class Login extends Component {
 
 
     return (
-
       <div className="Login">
-        <h1 style={text}>Log In to Docs!</h1>
+        {this.state.loginSuccess ? <h1 style={text}>Log In to Docs!</h1> : <Redirect to="/editorPage" />}
+        {this.state.loginFail ? <h1 style={text}>Log In Fail!</h1> : <Redirect to="/" />}
+
 
         <form
           onSubmit={this.handleSubmit}
@@ -88,11 +99,8 @@ export default class Login extends Component {
           }}
         >
           <FormGroup controlId="username" bsSize="large">
-
             <label>Username</label>
-
             <FormControl
-
               autoFocus
               type="string"
               value={this.state.username}
@@ -107,10 +115,7 @@ export default class Login extends Component {
             />
           </FormGroup>
           <FormGroup controlId="password" bsSize="large">
-
             <label>Password</label>
-
-
             <FormControl
               value={this.state.password}
               onChange={this.handleChange}
@@ -125,44 +130,40 @@ export default class Login extends Component {
             />
           </FormGroup>
 
-          <div style={button}  >
-
+          <div style={button}>
             <Button
               block
               bsSize="large"
               disabled={!this.validateForm()}
               type="submit"
-
               style={{
                 borderRadius: 6,
                 backgroundColor: "white"
               }}
-              onClick={(e) => {
-                console.log(this.state)
-                this.handleSubmit(e)
+              onClick={e => {
+                console.log(this.state);
+                this.handleSubmit(e);
               }}
             >
               Login
-          </Button>
-
-
+            </Button>
 
             <Button
               block
               bsSize="large"
               type="submit"
-
-
-
               style={{ borderRadius: 6, backgroundColor: "white" }}
-              onClick={() => <Redirect to="/register" />}
+              onClick={e => {
+                e.preventDefault();
+                console.log("trying to redirect");
+                return <Redirect to="/register" />;
+              }}
             >
               Go to Register
             </Button>
           </div>
-
         </form>
-      </div >
+      </div>
     );
   }
 }
@@ -177,10 +178,5 @@ const form = {
   height: 200
 };
 const button = {
-
-  padding: 9,
-
-}
-
-
-
+  padding: 9
+};
