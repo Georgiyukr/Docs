@@ -39,6 +39,9 @@ function PortalPage(props) {
       },
 
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({ docName: newDoc })
     })
       .then(response => response.json())

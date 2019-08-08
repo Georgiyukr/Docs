@@ -67,10 +67,11 @@ export default class Login extends Component {
       .then(res => res.json())
       .then(res => {
         console.log(res);
-
+        // this.props.history.push(`/portalPage`);
       })
       .catch(err => {
         console.log(err);
+        alert("credentials are wrong")
       });
   };
 
@@ -95,7 +96,7 @@ export default class Login extends Component {
           onSubmit={this.handleSubmit}
           style={form}
           style={{
-            marginLeft: 500
+            marginLeft: 300
           }}
         >
           <FormGroup controlId="username" bsSize="large">
@@ -153,11 +154,7 @@ export default class Login extends Component {
               bsSize="large"
               type="submit"
               style={{ borderRadius: 6, backgroundColor: "white" }}
-              onClick={e => {
-                e.preventDefault();
-                console.log("trying to redirect");
-                return <Redirect to="/register" />;
-              }}
+              onClick={this.handleOnSubmit}
             >
               Go to Register
             </Button>
@@ -170,7 +167,8 @@ export default class Login extends Component {
 
 const text = {
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
+  
 };
 
 const form = {
