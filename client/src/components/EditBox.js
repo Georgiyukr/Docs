@@ -5,11 +5,12 @@ import {
   EditorState,
   RichUtils,
   Modifier,
-  convertToRaw
+  convertToRaw,
+  convertFromRaw
 } from "draft-js";
 import Toolbar from "./Toolbar";
 
-function EditBox({ editorState, onChange }) {
+function EditBox({ editorState, onChange, saveDocument, docContent }) {
   const editBoxStyle = {
     background: "#fff",
     border: "3px solid #ddd",
@@ -24,8 +25,7 @@ function EditBox({ editorState, onChange }) {
     fontSize: "20px",
     marginTop: "10px",
     fontFamily: "Georgia",
-    padding: "5px",
-    marginTop: "10px"
+    padding: "5px"
   };
 
   const whole = {
@@ -34,6 +34,15 @@ function EditBox({ editorState, onChange }) {
     marginTop: 50,
     height: 300
   };
+
+  useEffect(() => {
+    console.log("rendering editbox!");
+    if (docContent) {
+      docContent = JSON.parse(docContent);
+      console.log("we have doc content in editbox:", docContent);
+      onChange(editorState.createWithContent(convertFromRaw(docContent)));
+    }
+  }, [docContent && docContent.doc]);
 
   const alignText = style => {
     let currentContent = editorState.getCurrentContent();
@@ -101,16 +110,6 @@ function EditBox({ editorState, onChange }) {
   //   ))
 
   // }
-  const saveDocument = content => {
-    fetch("/:docID/saveDoc", {
-      //will prob have to pass in actual docID to fetch here
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(convertToRaw(content))
-    }).catch(err => console.log(err));
-  };
 
   return (
     <div style={whole}>
@@ -126,10 +125,9 @@ function EditBox({ editorState, onChange }) {
           <Editor
             blockStyleFn={myBlockStyleFn}
             editorState={editorState}
-            onChange={() => {
-              const contentState = editorState.getCurrentContent();
-              // console.log("content state", convertToRaw(contentState));
+            onChange={editorState => {
               onChange(editorState);
+              const contentState = editorState.getCurrentContent();
               saveDocument(contentState);
             }}
             placeholder="Type below this line"

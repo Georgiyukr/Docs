@@ -114,11 +114,11 @@ module.exports = bigFunction = passport => {
       });
   });
 
-  router.get("/editorPage/docID", (req, res) => {
+  router.get("/editorPage/:docID", (req, res) => {
     //change link to route in portalpage.js to link to this route
     //display the document in editor view
-    console.log("hitting route");
-    console.log("docID", req.params.docID);
+    // console.log("hitting route");
+    // console.log("docID", req.params.docID);
     Document.findById(req.params.docID, (err, doc) => {
       if (err) {
         console.log("err finding clicked doc to display", err);
@@ -133,8 +133,8 @@ module.exports = bigFunction = passport => {
   router.post("/:docID/saveDoc", (req, res) => {
     Document.update(
       { _id: req.params.docID },
-      { content: req.body },
-      (err, res) => {
+      { content: req.body.content },
+      (err, updateResp) => {
         if (err) {
           res.json({ success: false, error: "Unable to update doc." });
         } else {

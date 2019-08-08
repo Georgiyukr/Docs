@@ -13,6 +13,7 @@ function PortalPage(props) {
       })
       .then(responseJson => {
         setDocumentState(responseJson.docArr);
+        setNewDocState("");
         console.log(documentState);
       })
       .catch(err => {
@@ -47,15 +48,13 @@ function PortalPage(props) {
       .then(response => response.json())
       .then(responseJson => {
         console.log(responseJson);
-        if (responseJson.success) {
-          setDocumentState(documentState.push(responseJson));
-          updateDocuments();
-        }
+
+        documentState.push(responseJson);
+        updateDocuments();
       })
       .catch(err => {
         console.log("ERROR IS IN ADD DOC", err);
       });
-    setNewDocState("");
   }
 
   return (
@@ -64,8 +63,8 @@ function PortalPage(props) {
       <span>
         <input
           type="text"
-          placeholder="Type document name here"
           onChange={event => handleTyping(event)}
+          value={newDoc}
         />
         <button
           onClick={event => {
