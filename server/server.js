@@ -29,6 +29,7 @@ app.use("/db", require('./routes')(passport));
 io.on('connection', function (socket) {
   console.log('a user connected');
   socket.on("message", function (data) {
+    console.log(data);
     socket.emit("change", data);
   })
 });

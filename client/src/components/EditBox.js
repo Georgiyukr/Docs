@@ -5,7 +5,8 @@ import {
   EditorState,
   RichUtils,
   Modifier,
-  convertToRaw
+  convertToRaw,
+  convertFromRaw
 } from "draft-js";
 import Toolbar from "./Toolbar";
 import io from 'socket.io-client';
@@ -152,15 +153,20 @@ function EditBox({ editorState, onChange }) {
             blockStyleFn={myBlockStyleFn}
             editorState={editorState}
             onChange={(editorState) => {
-              // const contentState = editorState.getCurrentContent();
+              const contentState = editorState.getCurrentContent();
               // // console.log("content state", convertToRaw(contentState));
-              // socket.on("change", (data) => {
-              //   console.log(data)
-              //   onChange(data);
-              // })
-              onChange(editorState);
-              // saveDocument(contentState);
-              socket.emit("message", editorState);
+              socket.on("change", (data) => {
+
+                let realData = JSON.parse(data)
+                console.log(convertFromRaw(realData));
+                console.log(EditorState.push(editorState, realData));
+                onChange(EditorState.push(editorState, realData))
+
+              })
+              //onChange(realData);
+
+              socket.emit("message", JSON.stringify(convertToRaw(contentState)));
+
             }}
             placeholder="Type below this line"
           />
