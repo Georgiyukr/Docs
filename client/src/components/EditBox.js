@@ -40,18 +40,28 @@ function EditBox({ location, editorState, onChange, saveDocument, docContent }) 
     height: 300
   };
 
+  useEffect(() => {
+    let docID = location.pathname.split("/")[2];
+    const room = docID;
+    socket.emit('room', room);
 
+  }, []);
 
   useEffect(() => {
-    if (!run) {
-      let docID = location.pathname.split("/")[2];
-      socket.emit("docID", docID);
-      const specialSocket = io('http://localhost:4000/' + docID);
-      specialSocket.emit("hi", test);
-      specialSocket.on("hi", (data) => setTest(data))
-      //run = true;
-    }
-    // console.log("rendering editbox!");
+
+
+    socket.emit("test", convertToRaw(editorState.getCurrentContent()));
+
+    socket.on("test", (data) => {
+
+      const contentState = convertFromRaw(data);
+      const editorState = EditorState.createWithContent(contentState);
+      onChange(editorState)
+    })
+
+  }, [run]);
+
+  useEffect(() => {
     if (docContent) {
       // console.log("we have doc content in editbox:", docContent);
       docContent = JSON.parse(docContent);
@@ -62,27 +72,12 @@ function EditBox({ location, editorState, onChange, saveDocument, docContent }) 
 
 
     }
-  }, [docContent && docContent.doc]);
+  }, [docContent && docContent.doc])
 
   const alignText = style => {
     let currentContent = editorState.getCurrentContent();
     let selection = editorState.getSelection();
-    // let focusBlock = currentContent.getBlockForKey(selection.getFocusKey());
-    // let anchorBlock = currentContent.getBlockForKey(selection.getAnchorKey());
-    // let selectionIsBackward = selection.getIsBackward();
 
-    // let changes = {
-    //   anchorOffset: 0,
-    //   focusOffset: focusBlock.getLength()
-    // };
-
-    // if (selectionIsBackward) {
-    //   changes = {
-    //     focusOffset: 0,
-    //     anchorOffset: anchorBlock.getLength()
-    //   };
-    // }
-    console.log("yeaaa");
 
     let nextContentState = Modifier.setBlockType(
       currentContent,
@@ -124,16 +119,9 @@ function EditBox({ location, editorState, onChange, saveDocument, docContent }) 
     onChange(RichUtils.toggleBlockType(editorState, style));
   };
 
-  // const _onFontColorChange = (color) => {
-  //   onChange(RichUtils.toggleBlockType(
-  //     editorState
-  //   ))
-
-  // }
-
   return (
     <div style={whole}>
-      <input onChange={(e) => setTest(e.target.value)} value={test}></input>
+
       <div style={editBoxStyle}>
         <Toolbar
           alignText={alignText}
@@ -150,6 +138,7 @@ function EditBox({ location, editorState, onChange, saveDocument, docContent }) 
               onChange(editorState);
               const contentState = editorState.getCurrentContent();
               saveDocument(contentState);
+              run = !run
             }}
             placeholder="Type below this line"
           />

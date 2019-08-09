@@ -5,8 +5,6 @@ import { Editor, EditorState, convertToRaw } from "draft-js";
 import EditBox from "../components/EditBox";
 import Headers from "../components/Headers";
 import { withRouter } from "react-router-dom";
-import io from "socket.io-client";
-const socket = io("http://localhost:4000");
 
 
 
@@ -59,8 +57,8 @@ function EditorPage(props) {
   };
 
   return (
-    <div className="pageContainer">
-      <h1 className="text" style={textstyle}>
+    <div style={{ display: "grid" }}>
+      <h1 className="text" >
         Doc Page
       </h1>
       <Headers
@@ -88,9 +86,6 @@ function EditorPage(props) {
   );
 }
 
-const textstyle = {
-  display: "flex",
-  justifyContent: "center"
-};
+
 
 export default withRouter(EditorPage);

@@ -91,7 +91,7 @@ function PortalPage(props) {
   }
 
   return (
-    <div>
+    <div style={{ display: "grid", paddingLeft: "20px" }}>
       <h1>Document Portal</h1>
       <span>
         <input

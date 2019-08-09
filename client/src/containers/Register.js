@@ -49,14 +49,12 @@ export default class Register extends Component {
 
   render() {
     return (
-      <div className="Login">
+      <div style={{ display: "grid", justifyContent: "center" }}>
         <h1 style={text}>Registration Page</h1>
         <form
           onSubmit={this.handleSubmit}
           style={form}
-          style={{
-            marginLeft: 300
-          }}
+          
         >
           <FormGroup controlId="username" bsSize="large">
             <label>Username</label>

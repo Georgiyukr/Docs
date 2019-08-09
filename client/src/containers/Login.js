@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import { Redirect } from "react-router";
-import "./Login.css";
+//import "./Login.css";
 import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
@@ -76,97 +76,104 @@ export default class Login extends Component {
     }
 
     return (
-      <div className="Login">
-        {this.state.loginSuccess ? (
-          <h1 style={text}>Log In to Docs!</h1>
-        ) : (
-            <Redirect to="/editorPage" />
-          )}
-        {this.state.loginFail ? (
-          <h1 style={text}>Log In Fail!</h1>
-        ) : (
-            <Redirect to="/" />
-          )}
+      <div style={{ display: "grid", justifyContent: "center" }}>
+        <div>
+          {this.state.loginSuccess ? (
+            <h1 style={text}>Log In to Docs!</h1>
+          ) : (
+              <Redirect to="/editorPage" />
+            )}
+          {this.state.loginFail ? (
+            <h1 style={text}>Log In Fail!</h1>
+          ) : (
+              <Redirect to="/" />
+            )}
 
-        <form
-          onSubmit={this.handleSubmit}
-          style={form}
-          style={{
-            marginLeft: 300
-          }}
-        >
-          <FormGroup controlId="username" bsSize="large">
-            <label>Username</label>
-            <FormControl
-              autoFocus
-              type="string"
-              value={this.state.username}
-              onChange={this.handleChange}
-              placeholder="Type in your username"
-              style={{
-                width: 200,
-                height: 25,
-                borderRadius: 5,
-                margin: 3
-              }}
-            />
-          </FormGroup>
-          <FormGroup controlId="password" bsSize="large">
-            <label>Password</label>
-            <FormControl
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-              placeholder="Type in your password"
-              style={{
-                width: 200,
-                height: 25,
-                borderRadius: 5,
-                margin: 3
-              }}
-            />
-          </FormGroup>
+        </div>
+        <div ><h1>Log In to Docs</h1></div>
+        <div>
 
-          <div style={button}>
-            <Button
-              block
-              bsSize="large"
-              disabled={!this.validateForm()}
-              type="submit"
-              style={{
-                borderRadius: 6,
-                backgroundColor: "white"
-              }}
-              onClick={e => {
-                console.log(this.state);
-                this.handleSubmit(e);
-              }}
-            >
-              Login
+
+          <form
+            onSubmit={this.handleSubmit}
+            style={form}
+
+          >
+            <FormGroup controlId="username" bsSize="large">
+              <label>Username</label>
+              <FormControl
+                autoFocus
+                type="string"
+                value={this.state.username}
+                onChange={this.handleChange}
+                placeholder="Type in your username"
+                style={{
+                  width: 200,
+                  height: 25,
+                  borderRadius: 5,
+                  margin: 3
+                }}
+
+              />
+            </FormGroup>
+            <FormGroup controlId="password" bsSize="large">
+              <label>Password</label>
+              <FormControl
+                value={this.state.password}
+                onChange={this.handleChange}
+                type="password"
+                placeholder="Type in your password"
+                style={{
+                  width: 200,
+                  height: 25,
+                  borderRadius: 5,
+                  margin: 3
+                }}
+
+              />
+            </FormGroup>
+
+            <div style={button}>
+              <Button
+                block
+                bsSize="large"
+                disabled={!this.validateForm()}
+                type="submit"
+                style={{
+                  borderRadius: 6,
+                  backgroundColor: "white"
+                }}
+                onClick={e => {
+                  console.log(this.state);
+                  this.handleSubmit(e);
+                }}
+              >
+                Login
             </Button>
 
-            <Button
-              block
-              bsSize="large"
-              type="submit"
-              style={{ borderRadius: 6, backgroundColor: "white" }}
-              onClick={this.handleOnSubmit}
-            >
-              Go to Register
+              <Button
+                block
+                bsSize="large"
+                type="submit"
+                style={{ borderRadius: 6, backgroundColor: "white" }}
+                onClick={this.handleOnSubmit}
+              >
+                Go to Register
             </Button>
-          </div>
-        </form>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }
 }
 
 const text = {
-  display: "flex",
-  justifyContent: "center"
+
 };
 
 const form = {
+
   width: 100,
   height: 200
 };

@@ -17,7 +17,7 @@ class Headers extends React.Component {
   }
   render() {
     return (
-      <div style={headers}>
+      <div >
         <div>
           <button className="HeaderButton" type="submit">
             <Link to="/portalPage">Back to Documents Portal</Link>
