@@ -57,12 +57,10 @@ function PortalPage(props) {
       .then(responseJson => {
 
         updateDocuments();
-
       })
       .catch(err => {
         console.log("ERROR IS IN ADD DOC", err);
       });
-
   }
 
   function addSharedDoc() {
@@ -96,11 +94,19 @@ function PortalPage(props) {
     <div>
       <h1>Document Portal</h1>
       <span>
-        <input type="text" onChange={event => handleTyping(event)} value={newDoc} />
-        <button onClick={event => {
-          console.log(newDoc)
-          addDocument(event, newDoc)
-        }}>Create Document</button>
+        <input
+          type="text"
+          onChange={event => handleTyping(event)}
+          value={newDoc}
+        />
+        <button
+          onClick={event => {
+            console.log(newDoc);
+            addDocument(event, newDoc);
+          }}
+        >
+          Create Document
+        </button>
       </span>
       <ul>
         {documentState.map(d => (

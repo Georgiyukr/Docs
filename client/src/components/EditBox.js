@@ -153,19 +153,7 @@ function EditBox({ editorState, onChange }) {
             blockStyleFn={myBlockStyleFn}
             editorState={editorState}
             onChange={(editorState) => {
-              const contentState = editorState.getCurrentContent();
-              // // console.log("content state", convertToRaw(contentState));
-              socket.on("change", (data) => {
 
-                let realData = JSON.parse(data)
-                console.log(convertFromRaw(realData));
-                console.log(EditorState.push(editorState, realData));
-                onChange(EditorState.push(editorState, realData))
-
-              })
-              //onChange(realData);
-
-              socket.emit("message", JSON.stringify(convertToRaw(contentState)));
 
             }}
             placeholder="Type below this line"
