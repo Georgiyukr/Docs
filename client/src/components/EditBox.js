@@ -36,11 +36,14 @@ function EditBox({ editorState, onChange, saveDocument, docContent }) {
   };
 
   useEffect(() => {
-    console.log("rendering editbox!");
+    // console.log("rendering editbox!");
     if (docContent) {
+      // console.log("we have doc content in editbox:", docContent);
       docContent = JSON.parse(docContent);
-      console.log("we have doc content in editbox:", docContent);
-      onChange(editorState.createWithContent(convertFromRaw(docContent)));
+      // console.log("we have doc content in editbox:", docContent);
+      let cookedContent = convertFromRaw(docContent);
+      // console.log("cooked", cookedContent);
+      onChange(EditorState.createWithContent(cookedContent));
     }
   }, [docContent && docContent.doc]);
 

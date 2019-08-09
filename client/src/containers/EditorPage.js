@@ -11,8 +11,6 @@ function EditorPage(props) {
   const [currentDocState, setCurrentDocState] = useState(null);
   const docID = props.location.pathname.split("/")[2];
   useEffect(() => {
-    // console.log("location", props.location.pathname);
-
     fetch(`http://localhost:4000/db/editorPage/${docID}`, {
       method: "GET",
       credentials: "include",
@@ -23,18 +21,17 @@ function EditorPage(props) {
     })
       .then(res => res.json())
       .then(resJSON => {
-        console.log("res from getting clicked doc from server side", resJSON);
+        //console.log("res from getting clicked doc from server side", resJSON);
         setCurrentDocState(resJSON);
-        console.log("current doc state", currentDocState);
+        //console.log("current doc state", currentDocState);
       })
       .catch(err => {
         console.log("err in getting clicked doc from server side", err);
       });
-  }, []);
+  }, [currentDocState && currentDocState.doc]);
 
   const saveDocument = content => {
     fetch(`http://localhost:4000/db/${docID}/saveDoc`, {
-      //will prob have to pass in actual docID to fetch here
       credentials: "include",
       redirect: "follow",
       method: "POST",
@@ -63,6 +60,11 @@ function EditorPage(props) {
         location={props.location}
         docTitle={currentDocState && currentDocState.doc.title}
         saveDocument={saveDocument}
+        docContent={
+          currentDocState &&
+          currentDocState.doc.content &&
+          currentDocState.doc.content
+        }
       />
       <EditBox
         location={props.location}

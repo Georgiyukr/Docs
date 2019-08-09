@@ -28,7 +28,9 @@ class Headers extends React.Component {
           <button
             className="HeaderButton"
             type="submit"
-            onClick={this.props.saveDocument} //need to pass in content of editbox here for this to work
+            onClick={docContent =>
+              this.props.saveDocument(this.props.docContent)
+            } //need to pass in content of editbox here for this to work
           >
             Save Changes
           </button>
