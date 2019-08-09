@@ -5,12 +5,19 @@ import { Editor, EditorState, convertToRaw } from "draft-js";
 import EditBox from "../components/EditBox";
 import Headers from "../components/Headers";
 import { withRouter } from "react-router-dom";
+import io from "socket.io-client";
+const socket = io("http://localhost:4000");
+
+
 
 function EditorPage(props) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [currentDocState, setCurrentDocState] = useState(null);
   const docID = props.location.pathname.split("/")[2];
+
+
   useEffect(() => {
+
     fetch(`http://localhost:4000/db/editorPage/${docID}`, {
       method: "GET",
       credentials: "include",

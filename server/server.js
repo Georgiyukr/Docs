@@ -27,12 +27,31 @@ app.use(bodyParser.json());
 app.use("/db", require('./routes')(passport));
 
 io.on('connection', function (socket) {
-  console.log('a user connected');
-  socket.on("message", function (data) {
-    console.log(data);
-    socket.emit("change", data);
+  //console.log('a user connected');
+  // socket.on("message", function (data) {
+  //   console.log(data);
+  //   socket.emit("change", data);
+  // })
+
+  socket.on("docID", function (data) {
+    //console.log(data);
+    let docID = data;
+    const nsp = io.of('/' + docID);
+
+    nsp.on('connection', function (specialSocket) {
+      console.log('someone connected');
+      specialSocket.on("hi", function (data) {
+        console.log("here", data);
+      })
+    });
+    //nsp.emit('hi', 'everyone!');
   })
+
+
+
 });
+
+
 
 server.listen(4000, () => {
   console.log("Listen on port 4000");

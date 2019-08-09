@@ -9,10 +9,11 @@ import {
   convertFromRaw
 } from "draft-js";
 import Toolbar from "./Toolbar";
-import io from 'socket.io-client';
-const socket = io('http://localhost:4000');
+import io from "socket.io-client";
+const socket = io("http://localhost:4000");
+let run = false;
 
-function EditBox({ editorState, onChange }) {
+function EditBox({ location, editorState, onChange, saveDocument, docContent }) {
   const editBoxStyle = {
     background: "#fff",
     border: "3px solid #ddd",
@@ -27,8 +28,7 @@ function EditBox({ editorState, onChange }) {
     fontSize: "20px",
     marginTop: "10px",
     fontFamily: "Georgia",
-    padding: "5px",
-    marginTop: "10px"
+    padding: "5px"
   };
 
   const whole = {
@@ -38,24 +38,28 @@ function EditBox({ editorState, onChange }) {
     height: 300
   };
 
-  // useEffect(() => {
-  //   fetch("localhost:3000/:docID/saveDoc", {
-  //     method: "POST",
-  //     credentials: "include",
-  //     redirect: "follow",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify({ docID: params.docID })
-  //   })
-  //     .then(res => res.json())
-  //     .then(res => {
-  //       console.log("res from posting docID to server side", res);
-  //     })
-  //     .catch(err => {
-  //       console.log("err in posting docID to server side", err);
-  //     });
-  // });
+
+
+  useEffect(() => {
+    if (!run) {
+      let docID = location.pathname.split("/")[2];
+      socket.emit("docID", docID);
+      const specialSocket = io('http://localhost:4000/' + docID);
+      specialSocket.emit("hi", "hi");
+      run = true;
+    }
+    // console.log("rendering editbox!");
+    if (docContent) {
+      // console.log("we have doc content in editbox:", docContent);
+      docContent = JSON.parse(docContent);
+      // console.log("we have doc content in editbox:", docContent);
+      let cookedContent = convertFromRaw(docContent);
+      // console.log("cooked", cookedContent);
+      onChange(EditorState.createWithContent(cookedContent));
+
+
+    }
+  }, [docContent && docContent.doc]);
 
   const alignText = style => {
     let currentContent = editorState.getCurrentContent();
@@ -123,20 +127,6 @@ function EditBox({ editorState, onChange }) {
   //   ))
 
   // }
-  const saveDocument = content => {
-    // fetch("http://localhost:4000/db/:docID/saveDoc", {
-    //   //will prob have to pass in actual docID to fetch here
-    //   credentials: "include",
-    //   redirect: "follow",
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify(convertToRaw(content))
-    // }).catch(err => console.log(err));
-  };
-
-
 
   return (
     <div style={whole}>
@@ -152,10 +142,10 @@ function EditBox({ editorState, onChange }) {
           <Editor
             blockStyleFn={myBlockStyleFn}
             editorState={editorState}
-            onChange={(editorState) => {
-              console.log("hi")
-
-
+            onChange={editorState => {
+              onChange(editorState);
+              const contentState = editorState.getCurrentContent();
+              saveDocument(contentState);
             }}
             placeholder="Type below this line"
           />
