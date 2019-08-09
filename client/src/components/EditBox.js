@@ -153,6 +153,7 @@ function EditBox({ editorState, onChange }) {
             blockStyleFn={myBlockStyleFn}
             editorState={editorState}
             onChange={(editorState) => {
+              console.log("hi")
 
 
             }}
