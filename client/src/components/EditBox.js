@@ -9,6 +9,8 @@ import {
   convertFromRaw
 } from "draft-js";
 import Toolbar from "./Toolbar";
+import io from "socket.io-client";
+const socket = io("http://localhost:4000");
 
 function EditBox({ editorState, onChange, saveDocument, docContent }) {
   const editBoxStyle = {

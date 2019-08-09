@@ -10,7 +10,7 @@ class Headers extends React.Component {
     };
   }
   componentDidMount() {
-    console.log(this.props.location.pathname.split("/")[2]);
+    //console.log(this.props.location.pathname.split("/")[2])
     this.setState({
       docID: this.props.location.pathname.split("/")[2]
     });

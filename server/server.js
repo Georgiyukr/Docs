@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const dbRoutes = require("./routes");
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
@@ -25,6 +26,13 @@ app.use(bodyParser.json());
 
 app.use("/db", require('./routes')(passport));
 
-app.listen(4000, () => {
+io.on('connection', function (socket) {
+  console.log('a user connected');
+  socket.on("message", function (data) {
+    socket.emit("change", data);
+  })
+});
+
+server.listen(4000, () => {
   console.log("Listen on port 4000");
 });

@@ -51,14 +51,14 @@ export default class Login extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        console.log("ye");
+        //console.log("ye");
         this.setState({
           loginSuccess: true
         });
-        console.log(res);
+        //console.log(res);
       })
       .catch(err => {
-        console.log("caught");
+        //console.log("caught");
         this.setState({
           loginFail: true
         });
@@ -80,13 +80,13 @@ export default class Login extends Component {
         {this.state.loginSuccess ? (
           <h1 style={text}>Log In to Docs!</h1>
         ) : (
-          <Redirect to="/editorPage" />
-        )}
+            <Redirect to="/editorPage" />
+          )}
         {this.state.loginFail ? (
           <h1 style={text}>Log In Fail!</h1>
         ) : (
-          <Redirect to="/" />
-        )}
+            <Redirect to="/" />
+          )}
 
         <form
           onSubmit={this.handleSubmit}
