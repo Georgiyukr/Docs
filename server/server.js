@@ -41,7 +41,7 @@ io.on('connection', function (socket) {
     nsp.on('connection', function (specialSocket) {
       console.log('someone connected');
       specialSocket.on("hi", function (data) {
-        console.log("here", data);
+        specialSocket.emit("hi", data);
       })
     });
     //nsp.emit('hi', 'everyone!');

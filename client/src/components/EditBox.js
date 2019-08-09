@@ -14,6 +14,8 @@ const socket = io("http://localhost:4000");
 let run = false;
 
 function EditBox({ location, editorState, onChange, saveDocument, docContent }) {
+  const [test, setTest] = useState("")
+
   const editBoxStyle = {
     background: "#fff",
     border: "3px solid #ddd",
@@ -45,8 +47,9 @@ function EditBox({ location, editorState, onChange, saveDocument, docContent }) 
       let docID = location.pathname.split("/")[2];
       socket.emit("docID", docID);
       const specialSocket = io('http://localhost:4000/' + docID);
-      specialSocket.emit("hi", "hi");
-      run = true;
+      specialSocket.emit("hi", test);
+      specialSocket.on("hi", (data) => setTest(data))
+      //run = true;
     }
     // console.log("rendering editbox!");
     if (docContent) {
@@ -130,6 +133,7 @@ function EditBox({ location, editorState, onChange, saveDocument, docContent }) 
 
   return (
     <div style={whole}>
+      <input onChange={(e) => setTest(e.target.value)} value={test}></input>
       <div style={editBoxStyle}>
         <Toolbar
           alignText={alignText}
