@@ -135,11 +135,7 @@ function EditBox({ editorState, onChange }) {
     // }).catch(err => console.log(err));
   };
 
-  // useEffect(() => {
-  //   socket.on("change", (data) => {
-  //     onChange(data);
-  //   })
-  // }, [editorState])
+
 
   return (
     <div style={whole}>
@@ -155,11 +151,15 @@ function EditBox({ editorState, onChange }) {
           <Editor
             blockStyleFn={myBlockStyleFn}
             editorState={editorState}
-            onChange={() => {
-              const contentState = editorState.getCurrentContent();
-              // console.log("content state", convertToRaw(contentState));
+            onChange={(editorState) => {
+              // const contentState = editorState.getCurrentContent();
+              // // console.log("content state", convertToRaw(contentState));
+              // socket.on("change", (data) => {
+              //   console.log(data)
+              //   onChange(data);
+              // })
               onChange(editorState);
-              saveDocument(contentState);
+              // saveDocument(contentState);
               socket.emit("message", editorState);
             }}
             placeholder="Type below this line"
